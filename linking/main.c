@@ -1,5 +1,5 @@
 /* main.c */
-void swap();
+extern void swap();
 
 int buf[2] = {1, 2};
 
