@@ -12,11 +12,13 @@ public:
     virtual ~i_svc_actor()
         {}
     
-    virtual int run() = 0;
+    virtual int initialize() = 0;
 
     virtual svc_actor_t id() const = 0;
 
     virtual actor_type type() const = 0;
+
+    virtual int run() = 0;
 };
 
 #endif

@@ -2,8 +2,8 @@
 #include "acceptor.h"
 #include "svc.h"
 
-acceptor::acceptor(i_svc* svc, svc_actor_t id, int port)
-    : svc_(svc), listen_port_(port), listen_fd_(0), id_(id)
+acceptor::acceptor(i_svc* svc, int port)
+    : svc_(svc), listen_port_(port), listen_fd_(0)
 {}
 
 acceptor::~acceptor()
@@ -13,51 +13,10 @@ acceptor::~acceptor()
     }
 }
 
-int acceptor::run()
+int acceptor::initialize()
 {
-    int listenfd = open_listenfd();
+    listen_fd_ = open_listenfd();
     
-    while(1) {
-        struct sockaddr_in clientaddr;
-        socklen_t clientlen = sizeof(clientaddr);
-        
-        int connfd = accept(listenfd, reinterpret_cast<SA*>(&clientaddr), &clientlen);
-        if (connfd < 0) {
-            handle_error("accept");
-        }
-
-        // void freeaddrinfo(struct addrinfo *res);
-        // struct addrinfo hints;
-        // struct addrinfo *hp, *rp;
-
-        // memset(&hints, 0, sizeof(struct addrinfo));
-        // hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
-        // hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
-        // hints.ai_flags = AI_CANONNAME;
-        // hints.ai_protocol = 0;          /* Any protocol */
-        // hints.ai_canonname = NULL;
-        // hints.ai_addr = NULL;
-        // hints.ai_next = NULL;
-
-        // int s = 0;
-        // if (s = getaddrinfo(reinterpret_cast<const char*>(&clientaddr.sin_addr.s_addr), 0,
-        //                     &hints, &hp) != 0) {
-        //     fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
-        //     exit(EXIT_FAILURE);
-        // }
-        // for (rp = hp; rp != 0; rp = rp->ai_next) {
-        //     char *haddrp = inet_ntoa(clientaddr.sin_addr);
-        //     printf("server connect to %s (%s).\n", rp->ai_canonname, haddrp);
-        // }
-
-        char *haddrp = inet_ntoa(clientaddr.sin_addr);
-        printf("server connect to %s.\n", haddrp);
-            
-        if (svc_->handle_actor(*this, connfd) < 0) {
-            close(connfd);
-        }
-    }
-
     return 0;
 }
 
@@ -96,10 +55,29 @@ int acceptor::open_listenfd()
 
 svc_actor_t acceptor::id() const
 {
-    return id_;
+    return listen_fd_;
 }
 
 actor_type acceptor::type() const
 {
     return actor_type("NET_ACCEPTOR");
+}
+
+int acceptor::run()
+{
+    struct sockaddr_in clientaddr;
+    socklen_t clientlen = sizeof(clientaddr);
+        
+    int connfd = accept(listen_fd_, reinterpret_cast<SA*>(&clientaddr), &clientlen);
+    if (connfd < 0) {
+        handle_error("accept");
+    }
+        
+    char *haddrp = inet_ntoa(clientaddr.sin_addr);
+    printf("server connect to %s.\n", haddrp);
+            
+    if (svc_->handle_actor(*this, connfd) < 0) {
+        close(connfd);
+    }
+    return 0;
 }

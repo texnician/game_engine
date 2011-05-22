@@ -8,14 +8,16 @@ class i_svc;
 class acceptor : public i_svc_actor
 {
 public:
-    acceptor(i_svc* svc, svc_actor_t id, int port);
+    acceptor(i_svc* svc, int port);
     ~acceptor();
     
-    virtual int run();
+    virtual int initialize();
 
     virtual svc_actor_t id() const;
 
     virtual actor_type type() const;
+
+    virtual int run();
 
 private:
     int open_listenfd();

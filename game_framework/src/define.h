@@ -23,5 +23,7 @@ typedef int HANDLE;
 typedef struct sockaddr SA;
 
 #define LISTEN_BACKLOG 50
+
+#define MAXLINE 1024
   
 #endif

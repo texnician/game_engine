@@ -16,6 +16,8 @@ public:
     virtual int run_event_loop() = 0;
 
     virtual int handle_actor(const i_svc_actor& actor, HANDLE fd) = 0;
+
+    virtual int register_handle(HANDLE fd) = 0;
 };
 
 #endif

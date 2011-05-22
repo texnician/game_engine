@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-extern const size_t RIO_BUFSIZE = 8192;
+#define RIO_BUFSIZE 8192
 
 struct rio_t 
 {
