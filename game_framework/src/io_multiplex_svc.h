@@ -9,7 +9,7 @@ class io_pool;
 class io_multiplex_svc : public i_svc
 {
 public:
-    io_multiplex_svc(std::unique_ptr<io_pool> pool);
+    io_multiplex_svc(UNIQUE_PTR<io_pool> pool);
     ~io_multiplex_svc();
     
     virtual int initialize();
@@ -24,7 +24,7 @@ private:
     int remove_handler(HANDLE fd);
 
     handler_map handlers_;
-    std::unique_ptr<io_pool> pool_;
+    UNIQUE_PTR<io_pool> pool_;
 };
 
 #endif

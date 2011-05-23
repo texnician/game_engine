@@ -6,7 +6,7 @@
 #include <memory>
 
 class i_net_event_handler;
-typedef std::shared_ptr<i_net_event_handler> handler_ptr;
+typedef SHARED_PTR<i_net_event_handler> handler_ptr;
 typedef std::map<HANDLE, handler_ptr> handler_map;
 
 class i_svc_actor;

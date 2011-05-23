@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     // simple_svc svc;
     // svc.run_event_loop();
-    io_multiplex_svc svc(std::unique_ptr<io_pool>(new select_pool(10)));
+    io_multiplex_svc svc(UNIQUE_PTR<io_pool>(new select_pool(10)));
     
     svc.initialize();
     svc.run_event_loop();

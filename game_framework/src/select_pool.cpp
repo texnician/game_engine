@@ -51,8 +51,8 @@ select_pool::io_event_list select_pool::get_io_events()
     {
         if (FD_ISSET(*it, &ready_set)) {
             events.push_back(io_pool_event(READ_EVENT, *it));
+            --nready;
         }
-        --nready;
     }
     return events;
 }

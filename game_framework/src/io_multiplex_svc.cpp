@@ -4,8 +4,8 @@
 #include "io_pool.h"
 #include "echo_handler.h"
 
-io_multiplex_svc::io_multiplex_svc(std::unique_ptr<io_pool> pool)
-    : pool_(std::move(pool))
+io_multiplex_svc::io_multiplex_svc(UNIQUE_PTR<io_pool> pool)
+    : pool_(MOVE_PTR(pool))
 {}
 
 io_multiplex_svc::~io_multiplex_svc()

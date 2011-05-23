@@ -1,6 +1,6 @@
 CXX := g++
 
-CXXFLAGS += -g -std=c++0x -Wall -pipe
+CXXFLAGS += -g -Wall -pipe -std=c++0x
 
 dep_dir := .deps
 
@@ -21,7 +21,7 @@ all: $(bin)
 
 -include $(deps)
 
-%.o: %.$(CXXSUFFIX)
+%.o: %.$(CXXSUFFIX) Makefile
 	$(CXX) $(CXXFLAGS) -fPIC -MD -MP -MF $(dep_dir)/$*.Tpo -c -o $@ $<
 
 $(bin): $(objs)
