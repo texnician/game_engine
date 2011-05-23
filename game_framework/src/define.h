@@ -11,6 +11,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <assert.h>
+#include <list>
+#include <algorithm>
+
 
 typedef int HANDLE;
 
@@ -25,5 +29,5 @@ typedef struct sockaddr SA;
 #define LISTEN_BACKLOG 50
 
 #define MAXLINE 1024
-  
+
 #endif

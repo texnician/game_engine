@@ -22,10 +22,13 @@ int echo_handle::handle_input(HANDLE fd)
     rio_t rio;
     rio_readinitb(&rio, fd);
     
-    while ((n = rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+    if ((n = rio_readlineb(&rio, buf, MAXLINE)) != 0) {
         printf("server received %ld bytes: %s", n, buf);
+        return 0;
     }
-    return -1;
+    else {
+        return -1;
+    }
 }
 
 int echo_handle::handle_output(HANDLE fd)

@@ -35,15 +35,15 @@ int simple_svc::run_event_loop()
     return 0;
 }
 
-int simple_svc::register_handle(HANDLE fd)
+int simple_svc::register_handler(handler_ptr p)
 {
-    handlers_[fd] = handler_ptr(new echo_handle(this, fd));
+    handlers_[p->id()] = p;
     return 0;
 }
 
 int simple_svc::handle_actor(const i_svc_actor& actor, HANDLE fd)
 {
-    register_handle(fd);
+    register_handler(handler_ptr(new echo_handle(this, fd)));
     
     return 0;
 }

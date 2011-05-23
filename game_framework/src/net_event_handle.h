@@ -3,10 +3,10 @@
 
 #include "define.h"
 
-class i_net_event_handle
+class i_net_event_handler
 {
 public:
-    virtual ~i_net_event_handle()
+    virtual ~i_net_event_handler()
         {}
 
     virtual HANDLE id() const = 0;

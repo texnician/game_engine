@@ -5,7 +5,7 @@
 
 class i_svc;
 
-class echo_handle : public i_net_event_handle
+class echo_handle : public i_net_event_handler
 {
 public:
     echo_handle(i_svc *svc, HANDLE fd);
