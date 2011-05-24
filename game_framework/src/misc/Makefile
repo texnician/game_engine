@@ -15,7 +15,7 @@ srcs := $(wildcard *.$(CXXSUFFIX))
 objs := $(subst .$(CXXSUFFIX),.o,$(srcs))
 
 deps := $(addprefix $(dep_dir)/,$(subst .$(CXXSUFFIX),.Tpo,$(srcs)))
-bin := net_framework
+bin := misc
 
 .PHONY: all clean
 
