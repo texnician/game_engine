@@ -1,6 +1,8 @@
-CXX := g++
+CXX ?= g++
 
 CXXFLAGS += -g -Wall -pipe -std=c++0x
+
+LDFLAGS += -lguile
 
 THREAD_FLAG := -pthread
 
@@ -27,7 +29,7 @@ all: $(bin)
 	$(CXX) $(CXXFLAGS) $(THREAD_FLAG) -fPIC -MD -MP -MF $(dep_dir)/$*.Tpo -c -o $@ $<
 
 $(bin): $(objs)
-	$(CXX) $(THREAD_FLAG) -o $@ $^
+	$(CXX) $(THREAD_FLAG) $(LDFLAGS) -o $@ $^
 
 clean:
 	rm -f *.o

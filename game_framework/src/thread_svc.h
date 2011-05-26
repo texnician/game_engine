@@ -32,7 +32,11 @@ public:
 
 private:
     typedef std::map<int, pthread_t> thread_map;
+    
     static void* run_handler_thread(void *argp);
+    
+    static void* script_vm_init(void*);
+    
     int thread_id_;
     thread_map thread_map_;
 };
