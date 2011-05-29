@@ -7,14 +7,18 @@
 
 thread_svc::thread_svc()
     : thread_id_(-1)
-{}
+{
+}
 
-void* thread_svc::script_vm_init(void*)
+void* thread_svc::script_vm_init(void* argp)
 {
     printf("Init script VM(guile)...\n");
     printf("1. define all SMOB types\n");
     printf("2. export primitives to Scheme using scm_c_define_gsubr\n");
 
+    // thread_svc::run_handler_thread(argp);
+    scm_with_guile(&thread_svc::run_handler_thread, argp);
+    
     return 0;
 }
 
@@ -52,10 +56,14 @@ void* thread_svc::run_handler_thread(void *argp)
     }
     
     fprintf(stderr, "Thread %d running.\n", arg.thread_id);
+    
+    SCM val = scm_current_thread();
+    scm_i_thread *thptr = SCM_I_THREAD_DATA(val);
+    printf("thread %d %s in guile mode.\n", arg.thread_id,
+           (thptr->guile_mode ? "is" : "is NOT"));
 
-    scm_with_guile(&thread_svc::script_vm_init, 0);
-        
-
+    scm_c_primitive_load("init.scm");
+    
     while (hdptr->handle_input(hdptr->id()) >= 0)
     {}
 
@@ -66,8 +74,13 @@ void* thread_svc::run_handler_thread(void *argp)
 
 int thread_svc::register_handler(handler_ptr p)
 {
+    // // SCM val = scm_current_thread();
+    // // scm_i_thread *thptr = SCM_I_THREAD_DATA(val);
+    // // printf("thread %s in guile mode.\n",
+    // //        (thptr->guile_mode ? "is" : "is NOT"));
+    
     pthread_t tid;
-    if (pthread_create(&tid, 0, &thread_svc::run_handler_thread,
+    if (pthread_create(&tid, 0, &thread_svc::script_vm_init,
                        new thread_arg(++thread_id_, p)) < 0)
     {
         handle_error("pthread_create");

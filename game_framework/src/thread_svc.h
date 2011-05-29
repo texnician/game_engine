@@ -36,6 +36,8 @@ private:
     static void* run_handler_thread(void *argp);
     
     static void* script_vm_init(void*);
+
+    static void* get_thread_info(void*);
     
     int thread_id_;
     thread_map thread_map_;

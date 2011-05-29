@@ -2,7 +2,14 @@ CXX ?= g++
 
 CXXFLAGS += -g -Wall -pipe -std=c++0x
 
-LDFLAGS += -lguile
+GUILE := guile-2.0
+GUILE_CFLAGS := $(shell pkg-config --cflags guile-2.0)
+GUILE_LDFLAGS := -L/usr/local/libs -lguile-2.0
+#GUILE_LDFLAGS := $(shell pkg-config --libs guile-2.0)
+
+LDFLAGS += $(GUILE_LDFLAGS)
+
+CXXFLAGS += $(GUILE_CFLAGS)
 
 THREAD_FLAG := -pthread
 
@@ -24,6 +31,8 @@ bin := net_framework
 all: $(bin)
 
 -include $(deps)
+
+# -DGC_NO_THREAD_REDIRECTS
 
 %.o: %.$(CXXSUFFIX) Makefile
 	$(CXX) $(CXXFLAGS) $(THREAD_FLAG) -fPIC -MD -MP -MF $(dep_dir)/$*.Tpo -c -o $@ $<

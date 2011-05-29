@@ -16,6 +16,19 @@
 #include <algorithm>
 #include <memory>
 
+#if defined(_GXX_EXPERIMENTAL_CXX0X_)
+  #define _CXX0X_ 1
+#else
+  #undef _CXX0X_
+#endif
+
+#if defined(_CXX0X_)
+  #include <unordered_map>
+  #define UNORDERED_MAP std::unordered_map
+#else
+  #include "boost/unordered_map.hpp"
+  #define UNORDERED_MAP boost::unordered_map
+#endif
 
 typedef int HANDLE;
 
@@ -35,11 +48,13 @@ typedef struct sockaddr SA;
   #define UNIQUE_PTR std::unique_ptr
   #define MOVE_PTR(p) std::move(p)
   #define SHARED_PTR std::shared_ptr
+  #define WEAK_PTR std::weak_ptr
 #else
   #define UNIQUE_PTR  std::auto_ptr
   #define MOVE_PTR(p) p.release()
   #include "boost/shared_ptr.hpp"
   #define SHARED_PTR boost::shared_ptr
+  #define WEAK_PTR boost::weak_ptr
 #endif
 
 #endif

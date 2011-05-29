@@ -1,3 +1,4 @@
+#include <sys/syscall.h>
 #include <libguile.h>
 #include "define.h"
 #include "rio.h"
@@ -21,17 +22,32 @@ HANDLE scripted_handler::id() const
 
 static SCM catch_body(void *data)
 {
+    SCM val = scm_current_thread();
+    scm_i_thread *thptr = SCM_I_THREAD_DATA(val);
+    printf("thread %s in guile mode.\n",
+           (thptr->guile_mode ? "is" : "is NOT"));
+    
+    char buf[MAXLINE];
     char *s = reinterpret_cast<char*>(data);
-    SCM ret_val = scm_c_eval_string(s);
-    printf("%f\n", scm_to_double(ret_val));
+    snprintf(buf, MAXLINE, "%s", s);
+    SCM ret_val = scm_eval_string(scm_from_locale_string(buf));
+    // printf("%f\n", scm_to_double(ret_val));
     return ret_val;
 }
 
 static SCM catch_handler(void *data, SCM tag, SCM throw_args)
 {
     char *stag = scm_to_locale_string(scm_symbol_to_string(tag));
-    printf("--- catch %s: %s", stag, (char *)data);
+    pid_t tid = syscall(SYS_gettid);
+    printf("%d --- catch %s: %s\n", tid, stag, (char*)data);
     free(stag);
+    return SCM_BOOL_T;
+}
+
+static SCM preunwind_handler(void *data, SCM key, SCM parameters)
+{
+    /* Capture the stack here: */
+    *(SCM *)data = scm_make_stack (SCM_BOOL_T, SCM_EOL);
     return SCM_BOOL_T;
 }
 
@@ -43,10 +59,23 @@ int scripted_handler::handle_input(HANDLE fd)
     rio_readinitb(&rio, fd);
     
     if ((n = rio_readlineb(&rio, buf, MAXLINE)) != 0) {
-        printf("server received %ld bytes: %s", n, buf);
-        printf("eval %s", buf);
+        pid_t tid = syscall(SYS_gettid);
+        printf("[TID:%d] server received %ld bytes: %s", tid, n, buf);
+        printf("[TID:%d] eval %s", tid, buf);
 
-        scm_c_catch (SCM_BOOL_T, catch_body, buf, catch_handler, buf, 0, 0);
+        SCM captured_stack = SCM_BOOL_F;
+
+        scm_c_catch (SCM_BOOL_T, catch_body, buf, catch_handler, buf,
+                     preunwind_handler, &captured_stack);
+
+        SCM port = scm_open_output_string ();
+        if (captured_stack != SCM_BOOL_F) {
+            scm_display_backtrace (captured_stack, port, SCM_BOOL_F, SCM_BOOL_F);
+            SCM scm_str = scm_get_output_string (port);
+            char *stack_str = scm_to_locale_string(scm_str);
+            printf("STACK:\n%s", stack_str);
+            scm_close_output_port(port);
+        }
         
         return 0;
     }
