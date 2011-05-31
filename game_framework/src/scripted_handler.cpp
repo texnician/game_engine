@@ -29,9 +29,15 @@ static SCM catch_body(void *data)
     
     char buf[MAXLINE];
     char *s = reinterpret_cast<char*>(data);
-    snprintf(buf, MAXLINE, "%s", s);
+    snprintf(buf, MAXLINE, "(mote-carlo-pi %s)", s);
+    struct timeval a;
+    gettimeofday(&a, 0);
     SCM ret_val = scm_eval_string(scm_from_locale_string(buf));
-    // printf("%f\n", scm_to_double(ret_val));
+    printf("%f\n", scm_to_double(ret_val));
+    struct timeval b;
+    gettimeofday(&b, 0);
+    printf("elapsed %f\n", double(b.tv_sec - a.tv_sec) +
+           double(b.tv_usec - a.tv_usec) / 1000000.0);
     return ret_val;
 }
 
