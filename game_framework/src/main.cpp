@@ -4,6 +4,7 @@
 #include "select_pool.h"
 #include "thread_svc.h"
 #include "sid.h"
+#include "log.h"
 
 static void
 inner_main (void *closure, int argc, char **argv)
@@ -14,24 +15,17 @@ inner_main (void *closure, int argc, char **argv)
     // printf("thread %s in guile mode.\n",
     //        (thptr->guile_mode ? "is" : "is NOT"));
 
-    std::vector<sid> sid_vec;
-    sid_vec.push_back(sid("*"));
-    sid_vec.push_back(sid("game_logic"));
-    sid_vec.push_back(sid("gateway"));
-    sid_vec.push_back(sid("model"));
-    sid_vec.push_back(sid("reponsitory"));
-    sid_vec.push_back(sid("player_dead"));
-    sid_vec.push_back(sid("level_up"));
-    sid_vec.push_back(sid("router"));
 
-    for (std::vector<sid>::iterator it = sid_vec.begin();
-         it != sid_vec.end(); ++it)
+    g_log::reporting_level() = L_DEBUG2;
+    const int count = 3;
+    g_log().get(L_DEBUG) << "A loop with "    << count << " iterations";
+    for (int i = 0; i != count; ++i)
     {
-        printf("0x%x => %s\n", it->get_id(), it->get_str());
+        g_log().get(L_DEBUG1)        << "the counter i = " << i;
     }
-    thread_svc svc;
-    svc.initialize();
-    svc.run_event_loop();
+    // // thread_svc svc;
+    // // svc.initialize();
+    // // svc.run_event_loop();
 }
 
 int main(int argc, char *argv[])

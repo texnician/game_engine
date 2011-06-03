@@ -8,12 +8,13 @@ enum log_level_t {
     L_WARNING,
     L_INFO,
     L_DEBUG,
+    L_DEBUG1,
     L_DEBUG2,
     L_DEBUG3,
     L_DEBUG4,
 };
 
-#define MAX_LOG_LEVEL 7
+#define MAX_LOG_LEVEL 8
 
 extern "C" {
     struct log_level_entry 
@@ -28,14 +29,15 @@ extern const struct log_level_entry log_level_table[MAX_LOG_LEVEL];
 
 typedef std::ostringstream oss;
 
-class log
+class g_log
 {
 public:
-    log();
+    g_log()
+        {}
 
-    ~log();
+    ~g_log();
 
-    oss& get(log_level_t level);
+    oss& get(log_level_t level = L_INFO);
 
     // Get global reporting level.
     static log_level_t& reporting_level();
@@ -46,10 +48,10 @@ public:
     
 private:
     // Disable copy ctor and assigin operator.
-    log(const log&);
-    log& operator = (const log&);
+    g_log(const g_log&);
+    g_log& operator = (const g_log&);
 
-    oss& oss_;
+    oss oss_;
 
     log_level_t level_;
 };
