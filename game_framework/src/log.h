@@ -33,14 +33,11 @@ class log
 public:
     log();
 
-    virtual ~log();
+    ~log();
 
     oss& get(log_level_t level);
 
-    inline const log_level_t& get_level() const
-        {
-            return level_;
-        }
+    static log_level_t& reporting_level();
 
     static const char* level_c_str(const log_level_t& level);
     
