@@ -4,7 +4,7 @@
 #include <sstream>
 
 enum log_level_t {
-    L_ERROR,
+    L_ERROR = 0,
     L_WARNING,
     L_INFO,
     L_DEBUG,
@@ -37,9 +37,12 @@ public:
 
     oss& get(log_level_t level);
 
+    // Get global reporting level.
     static log_level_t& reporting_level();
 
     static const char* level_c_str(const log_level_t& level);
+
+    static std::string now_time();
     
 private:
     // Disable copy ctor and assigin operator.
@@ -51,4 +54,4 @@ private:
     log_level_t level_;
 };
 
-#endif
+#endif  // _LOG_H_

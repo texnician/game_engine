@@ -35,9 +35,47 @@ log_level_t& log::reporting_level()
 
 oss& log::get(log_level_t level)
 {
-    oss_ << "- " << 0;
+    oss_ << "- " << log::now_time();
     oss_ << " "  << level_c_str(level) << ": ";
     oss_ << std::string(level > L_DEBUG ? 0 : level - L_DEBUG, '\t');
     level_ = level;
     return oss_;
 }
+
+#if defined(__linux__)
+
+#include <sys/time.h>
+
+std::string log::now_time()
+{
+    char buffer[11];
+    time_t t;
+    time(&t);
+    tm r = {0};
+    strftime(buffer, sizeof(buffer), "%X", localtime_r(&t, &r));
+    struct timeval tv;
+    gettimeofday(&tv, 0);
+    char result[100] = {0};
+    std::sprintf(result, "%s.%03ld", buffer, (long)tv.tv_usec / 1000); 
+    return result;
+}
+
+#else
+
+#include <windows.h>
+
+std::string log::now_time()
+{
+    const int MAX_LEN = 200;
+    char buffer[MAX_LEN];
+    if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, 
+            "HH':'mm':'ss", buffer, MAX_LEN) == 0)
+        return "Error in NowTime()";
+
+    char result[100] = {0};
+    static DWORD first = GetTickCount();
+    std::sprintf(result, "%s.%03ld", buffer, (long)(GetTickCount() - first) % 1000); 
+    return result;
+}
+
+#endif  // __linux__
