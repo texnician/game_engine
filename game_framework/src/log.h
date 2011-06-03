@@ -37,9 +37,10 @@ public:
 
     oss& get(log_level_t level);
 
-    static const log_level_t& get_level();
-
-    static void set_level(log_level_t&);
+    inline const log_level_t& get_level() const
+        {
+            return level_;
+        }
 
     static const char* level_c_str(const log_level_t& level);
     

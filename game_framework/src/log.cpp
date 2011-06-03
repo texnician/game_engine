@@ -30,7 +30,3 @@ oss& log::get(log_level_t level)
     level_ = level;
     return oss_;
 }
-
-    // static const log_level_t& get_level();
-
-    // static void set_level(log_level_t&);
