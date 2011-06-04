@@ -21,11 +21,9 @@ const struct log_level_entry log_level_table[MAX_LOG_LEVEL] = {
 
 g_log::~g_log()
 {
-    if (level_ <= g_log::reporting_level()) {
-        oss_ << std::endl;
-        fprintf(stderr, "%s", oss_.str().c_str());
-        fflush(stderr);
-    }
+    oss_ << std::endl;
+    fprintf(stderr, "%s", oss_.str().c_str());
+    fflush(stderr);
 }
 
 const char* g_log::level_c_str(const log_level_t& level)

@@ -65,4 +65,15 @@ private:
     oss oss_;
 };
 
+#define S_LOG(level)                            \
+    if (level > g_log::reporting_level());      \
+    else                                        \
+        g_log().get_stream(level)
+
+#define LOG(level, ...)                             \
+    if (level > g_log::reporting_level());              \
+    else do {                                               \
+    g_log().log(level, __FILE__, __LINE__, __VA_ARGS__);    \
+    } while(0)
+
 #endif  // _LOG_H_
