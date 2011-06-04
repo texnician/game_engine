@@ -66,7 +66,7 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf, size_t n)
             }
         }
         else if (rp->rio_cnt == 0) { // EOF
-            fprintf(stderr, "Connection <%d> reset by peer.\n", rp->rio_fd);
+            LOG(L_ERROR, "Connection <%d> reset by peer.", rp->rio_fd);
             return 0;
         }
         else {

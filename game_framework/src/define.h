@@ -75,4 +75,6 @@ typedef struct sockaddr SA;
 // TODO(hamaji): Add other platforms.
 #endif
 
+#include "log.h"
+
 #endif

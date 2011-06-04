@@ -14,7 +14,7 @@ public:
             {}
         ~thread_arg()
             {
-                fprintf(stderr, "thread arg %d dtor.\n", thread_id);
+                LOG(L_DEBUG, "thread arg %d dtor.", thread_id);
             }
         int thread_id;
         handler_ptr hdptr;

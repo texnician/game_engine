@@ -33,9 +33,9 @@ thread_svc::thread_svc()
 
 void* thread_svc::script_vm_init(void* argp)
 {
-    printf("Init script VM(guile)...\n");
-    printf("1. define all SMOB types\n");
-    printf("2. export primitives to Scheme using scm_c_define_gsubr\n");
+    LOG(L_INFO, "Init script VM(guile)...");
+    LOG(L_DEBUG, "1. define all SMOB types");
+    LOG(L_DEBUG, "2. export primitives to Scheme using scm_c_define_gsubr");
     
     // thread_svc::run_handler_thread(argp);
     scm_with_guile(&thread_svc::run_handler_thread, argp);
@@ -80,13 +80,13 @@ void* thread_svc::run_handler_thread(void *argp)
     if (pthread_detach(tid) < 0) {
         handle_error("pthread_detach");
     }
-    
-    fprintf(stderr, "Thread %d running.\n", arg.thread_id);
+
+    LOG(L_INFO, "Thread %d running", arg.thread_id);
     
     SCM val = scm_current_thread();
     scm_i_thread *thptr = SCM_I_THREAD_DATA(val);
-    printf("thread %d %s in guile mode.\n", arg.thread_id,
-           (thptr->guile_mode ? "is" : "is NOT"));
+    LOG(L_INFO, "thread %d %s in guile mode.", arg.thread_id,
+        (thptr->guile_mode ? "is" : "is NOT"));
 
     scm_c_define_gsubr("test", 1, 0, 0, (void*)&test);
     scm_c_define_gsubr("c-random-in-range", 2, 0, 0, (void*)&c_random_in_range);
@@ -96,7 +96,7 @@ void* thread_svc::run_handler_thread(void *argp)
     {}
 
     // put this info in  guard object's dtor
-    fprintf(stderr, "Thread %d exit.\n", arg.thread_id);
+    LOG(L_INFO, "Thread %d exit.", arg.thread_id);
     return 0;
 }
 

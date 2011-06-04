@@ -23,7 +23,7 @@ int echo_handle::handle_input(HANDLE fd)
     rio_readinitb(&rio, fd);
     
     if ((n = rio_readlineb(&rio, buf, MAXLINE)) != 0) {
-        printf("server received %ld bytes: %s", n, buf);
+        LOG(L_INFO, "server received %ld bytes: %s", n, buf);
         return 0;
     }
     else {

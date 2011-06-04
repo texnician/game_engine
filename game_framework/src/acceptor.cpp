@@ -74,7 +74,7 @@ int acceptor::run()
     }
         
     char *haddrp = inet_ntoa(clientaddr.sin_addr);
-    printf("server connect to %s.\n", haddrp);
+    LOG(L_INFO, "server connect to %s.", haddrp);
             
     if (svc_->handle_actor(*this, connfd) < 0) {
         close(connfd);
