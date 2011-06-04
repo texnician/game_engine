@@ -4,35 +4,37 @@
 #include <sstream>
 
 enum log_level_t {
-    L_EMERG = 0,     // system is unusable
+    L_FATA = 0,     // system is unusable
     L_ALERT,         // action must be taken immediately
     L_CRIT,          // critical conditions
     L_ERROR,         // error conditions
     L_WARNING,       // warning conditions
     L_NOTICE,        // normal but significant condition
     L_INFO,          // informational
-    L_DEBUG,         // debug-level 0 messages
-    L_DEBUG1,        // debug-level 1 messages
-    L_DEBUG2,        // debug-level 2 messages
-    L_DEBUG3,        // debug-level 3 messages
-    L_DEBUG4,        // debug-level 4 messages
+    L_DEBUG,         // debug messages
 };
 
-#define MAX_LOG_LEVEL 12
+#ifndef FILELOG_MAX_LEVEL
+#define FILELOG_MAX_LEVEL L_DEBUG
+#endif
+
+#define __MAX_LOG_LEVEL__ 8
 
 extern "C" {
     struct log_level_entry 
     {
         log_level_t lv;
         const char* name;
+        const char* abbrev;
     };
 }
 
-extern const struct log_level_entry log_level_table[MAX_LOG_LEVEL];
+extern const struct log_level_entry log_level_table[__MAX_LOG_LEVEL__];
 
 
 typedef std::ostringstream oss;
 
+template<typename OutputPolicy>
 class g_log
 {
 public:
@@ -42,18 +44,11 @@ public:
     ~g_log();
 
     // Get log message stream.
-    oss& get_stream(log_level_t level = L_INFO,
+    oss& get_stream(log_level_t level = L_INFO, int indent = 0,
                     const char* file = 0, int line = 0);
-
-    void log(log_level_t level, const char* file, int line,
-             const char* fmt, ...);
-
+    
     // Get global reporting level.
     static log_level_t& reporting_level();
-
-    static const char* level_c_str(const log_level_t& level);
-
-    static std::string now_time();
     
 private:
     // Disable copy ctor and assigin operator.
@@ -65,15 +60,90 @@ private:
     oss oss_;
 };
 
-#define S_LOG(level)                            \
-    if (level > g_log::reporting_level());      \
-    else                                        \
-        g_log().get_stream(level)
+const char* level_c_str(const log_level_t& level);
 
-#define LOG(level, ...)                             \
-    if (level > g_log::reporting_level());              \
-    else do {                                               \
-    g_log().log(level, __FILE__, __LINE__, __VA_ARGS__);    \
-    } while(0)
+const char* level_abbrev_c_str(const log_level_t& level);
+
+std::string log_now_time();
+
+std::string fmt_log(const char* fmt, ...);
+
+pid_t get_tid();
+
+template<typename OutputPolicy>
+g_log<OutputPolicy>::~g_log()
+{
+    oss_ << std::endl;
+    OutputPolicy::out_put(oss_.str());
+}
+
+template<typename OutputPolicy>
+log_level_t& g_log<OutputPolicy>::reporting_level()
+{
+    static log_level_t global_reporting_level = L_DEBUG;
+    return global_reporting_level;
+}
+
+template<typename OutputPolicy>
+oss& g_log<OutputPolicy>::get_stream(log_level_t level, int indent,
+                                     const char* file, int line)
+{
+    oss_ << level_abbrev_c_str(level);
+    oss_ << ' ' << log_now_time();
+    oss_ << ' ' << get_tid();
+    if (file != 0 && line > 0) {
+        oss_ << ' ' << file << ':' << line;
+    }
+    oss_ << "] ";
+    oss_ << std::string(indent, ' ');
+    level_ = level;
+    return oss_;
+}
+
+typedef FILE* file_ptr;
+
+class log2file
+{
+public:
+    static void set_file_stream(const file_ptr& ptr);
+    
+    static void out_put(const std::string& msg);
+
+private:
+    static file_ptr& get_file_stream();
+};
+
+typedef g_log<log2file> file_log;
+
+#define S_LOG_WITHLINE_INDENT_IF(level, file, line, indent, cond)   \
+    if (level > FILELOG_MAX_LEVEL);                                 \
+    else if (level > file_log::reporting_level());                  \
+    else if (!(cond));                                              \
+    else                                                            \
+        file_log().get_stream(level, (indent), (file), (line))
+
+#define S_LOG_INDENT_IF(level, indent, cond)                \
+    S_LOG_WITHLINE_INDENT_IF(level, 0, 0, (indent), (cond))
+
+#define S_LOG_IF(level, cond)                   \
+    S_LOG_INDENT_IF(level, 0, (cond))
+
+#define S_LOG_INDENT(level, indent)             \
+    S_LOG_INDENT_IF(level, (indent), true)
+
+#define S_LOG(level)                            \
+    S_LOG_INDENT(level, 0)
+
+#define LOG_INDENT_IF(level, indent, cond, ...)                         \
+    S_LOG_WITHLINE_INDENT_IF(level, __FILE__, __LINE__, indent, (cond)) << fmt_log(__VA_ARGS__)
+
+#define LOG_IF(level, cond, ...)                    \
+    LOG_INDENT_IF(level, 0, (cond), __VA_ARGS__)
+
+#define LOG_INDENT(level, indent, ...)                  \
+    LOG_INDENT_IF(level, (indent), true, __VA_ARGS__)
+
+#define LOG(level, ...)                         \
+    LOG_IF(level, true, __VA_ARGS__)
 
 #endif  // _LOG_H_

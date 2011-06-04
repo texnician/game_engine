@@ -16,13 +16,14 @@ inner_main (void *closure, int argc, char **argv)
     //        (thptr->guile_mode ? "is" : "is NOT"));
 
 
-    g_log::reporting_level() = L_DEBUG2;
+    file_log::reporting_level() = L_DEBUG;
     const int count = 3;
-    S_LOG(L_DEBUG) << "A loop with " << count << " iterations";
+    LOG(L_DEBUG, "A loop with %d iterations", count);
+    // S_LOG(L_DEBUG) << "A loop with " << count << " iterations";
     
-    for (int i = 0; i != count; ++i)
+    for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
     {
-        LOG(L_DEBUG, "the counter %d", i);
+        LOG_INDENT_IF(log_level_t(i), i, i < __MAX_LOG_LEVEL__, "the counter %d", i);
     }
     // // thread_svc svc;
     // // svc.initialize();
