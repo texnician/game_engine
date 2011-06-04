@@ -95,7 +95,10 @@ oss& g_log<OutputPolicy>::get_stream(log_level_t level, int indent,
         oss_ << ' ' << file << ':' << line;
     }
     oss_ << "] ";
-    oss_ << std::string(indent, ' ');
+    while (indent > 0) {
+        oss_ << "| ";
+        --indent;
+    }
     level_ = level;
     return oss_;
 }

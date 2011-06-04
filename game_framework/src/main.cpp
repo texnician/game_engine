@@ -10,6 +10,11 @@ static void
 inner_main (void *closure, int argc, char **argv)
 {
     file_log::reporting_level() = L_DEBUG;
+
+    for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
+    {
+        LOG_INDENT_IF(log_level_t(i), i, i < __MAX_LOG_LEVEL__, "the counter %d", i);
+    }
     
     thread_svc svc;
     svc.initialize();

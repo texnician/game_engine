@@ -111,7 +111,6 @@ void log2file::out_put(const std::string& msg)
 
 pid_t get_tid()
 {
-    // On Linux and FreeBSD, we try to use gettid().
 #if defined(__linux__)
 #ifndef __NR_gettid
 #define __NR_gettid SYS_gettid
