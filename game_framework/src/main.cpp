@@ -18,10 +18,22 @@ inner_main (void *closure, int argc, char **argv)
 
     g_log::reporting_level() = L_DEBUG2;
     const int count = 3;
-    g_log().get(L_DEBUG) << "A loop with "    << count << " iterations";
+    // LOG(L_DEBUG, "A loop with %d iterations", count)
+    // {
+    //     if (L_DEBUG > g_log::reporting_level()) ;
+    //     else do {
+    //             g_log().log(L_DEBUG, __FILE__, __LINE__, "A loop with %d iterations", count);
+    //         } while (0);
+    // }
+    
+    // g_log().get(L_DEBUG).log("A loop with %d iterations", count);
+    g_log().get_stream(L_DEBUG) << "A loop with " << count << " iterations";
+    // g_log().log(L_DEBUG, __FILE__, __LINE__, "A loop with %d iteration", count);
+    
     for (int i = 0; i != count; ++i)
     {
-        g_log().get(L_DEBUG1)        << "the counter i = " << i;
+        // g_log().log(L_DEBUG1, __FILE__, __LINE__, "the counter i = %d", i);
+        g_log().get_stream(L_DEBUG1) << "the counter i = " << i;
     }
     // // thread_svc svc;
     // // svc.initialize();

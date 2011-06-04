@@ -1,10 +1,16 @@
 #include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
 #include "assert.h"
 #include "log.h"
 
 const struct log_level_entry log_level_table[MAX_LOG_LEVEL] = {
+    { L_EMERG, "EMERG" },
+    { L_ALERT, "ALERT" },
+    { L_CRIT, "CRIT" },
     { L_ERROR, "ERROR"},
     { L_WARNING, "WARNING" },
+    { L_NOTICE, "NOTICE" },
     { L_INFO, "INFO" },
     { L_DEBUG, "DEBUG" },
     { L_DEBUG1, "DEBUG1" },
@@ -34,13 +40,36 @@ log_level_t& g_log::reporting_level()
     return global_reporting_level;
 }
 
-oss& g_log::get(log_level_t level)
+oss& g_log::get_stream(log_level_t level, const char* file, int line)
 {
-    oss_ << "- " << g_log::now_time();
-    oss_ << " "  << level_c_str(level) << ": ";
-    oss_ << std::string(2*(level > L_DEBUG ? level - L_DEBUG : 0), ' ');
+    oss_ << g_log::now_time();
+    oss_ << ' '  << level_c_str(level);
+    if (file != 0 && line > 0) {
+        oss_ << ' ' << file << ':' << line;
+    }
+    oss_ << ": ";
+    oss_ << std::string(level > L_DEBUG ? level - L_DEBUG : 0, ' ');
     level_ = level;
     return oss_;
+}
+
+void g_log::log(log_level_t level, const char* file, int line,
+                const char* fmt, ...)
+{
+    static const int MAXLINE = 1024;
+    
+    va_list ap;
+    va_start(ap, fmt);
+    char buf[MAXLINE];
+    memset(buf, 0, sizeof(buf));
+#if defined(__linux__)
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+#else
+    vsnprintf_s(buf, sizeof(buf), _TRUNCATE, fmt, ap);
+#endif
+    va_end(ap);
+
+    get_stream(level, file, line) << buf;
 }
 
 #if defined(__linux__)

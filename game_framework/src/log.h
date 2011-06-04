@@ -4,17 +4,21 @@
 #include <sstream>
 
 enum log_level_t {
-    L_ERROR = 0,
-    L_WARNING,
-    L_INFO,
-    L_DEBUG,
-    L_DEBUG1,
-    L_DEBUG2,
-    L_DEBUG3,
-    L_DEBUG4,
+    L_EMERG = 0,     // system is unusable
+    L_ALERT,         // action must be taken immediately
+    L_CRIT,          // critical conditions
+    L_ERROR,         // error conditions
+    L_WARNING,       // warning conditions
+    L_NOTICE,        // normal but significant condition
+    L_INFO,          // informational
+    L_DEBUG,         // debug-level 0 messages
+    L_DEBUG1,        // debug-level 1 messages
+    L_DEBUG2,        // debug-level 2 messages
+    L_DEBUG3,        // debug-level 3 messages
+    L_DEBUG4,        // debug-level 4 messages
 };
 
-#define MAX_LOG_LEVEL 8
+#define MAX_LOG_LEVEL 12
 
 extern "C" {
     struct log_level_entry 
@@ -32,12 +36,17 @@ typedef std::ostringstream oss;
 class g_log
 {
 public:
-    g_log()
+    explicit g_log()
         {}
 
     ~g_log();
 
-    oss& get(log_level_t level = L_INFO);
+    // Get log message stream.
+    oss& get_stream(log_level_t level = L_INFO,
+                    const char* file = 0, int line = 0);
+
+    void log(log_level_t level, const char* file, int line,
+             const char* fmt, ...);
 
     // Get global reporting level.
     static log_level_t& reporting_level();
@@ -51,9 +60,9 @@ private:
     g_log(const g_log&);
     g_log& operator = (const g_log&);
 
-    oss oss_;
-
     log_level_t level_;
+    
+    oss oss_;
 };
 
 #endif  // _LOG_H_
