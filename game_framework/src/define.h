@@ -1,6 +1,8 @@
 #ifndef _DEFINE_H_
 #define _DEFINE_H_
 
+// gcc -arch ppc -dM -E - < /dev/null
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -15,8 +17,11 @@
 #include <list>
 #include <algorithm>
 #include <memory>
+#include "os_test.h"
 
-#if defined(_GXX_EXPERIMENTAL_CXX0X_)
+#if defined(__GNUC__) && defined(__GXX_EXPERIMENTAL_CXX0X__)
+  #define _CXX0X_ 1
+#elif defined(_MSC_VER) && (_MSC_VER >= 1600)
   #define _CXX0X_ 1
 #else
   #undef _CXX0X_
@@ -55,24 +60,6 @@ typedef struct sockaddr SA;
   #include "boost/shared_ptr.hpp"
   #define SHARED_PTR boost::shared_ptr
   #define WEAK_PTR boost::weak_ptr
-#endif
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
-# define OS_WINDOWS
-#elif defined(__CYGWIN__) || defined(__CYGWIN32__)
-# define OS_CYGWIN
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-# define OS_LINUX
-#elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
-# define OS_MACOSX
-#elif defined(__FreeBSD__)
-# define OS_FREEBSD
-#elif defined(__NetBSD__)
-# define OS_NETBSD
-#elif defined(__OpenBSD__)
-# define OS_OPENBSD
-#else
-// TODO(hamaji): Add other platforms.
 #endif
 
 #include "log.h"
