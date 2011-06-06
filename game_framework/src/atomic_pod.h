@@ -33,7 +33,8 @@ private:
     std::atomic<integral_type> impl_;
     
 public:
-
+    typedef integral_type value_type;
+    
     atomic_pod() = default;
     ~atomic_pod() = default;
     atomic_pod(integral_type v)
@@ -141,6 +142,8 @@ private:
     std::atomic<bool> impl_;
 
 public:
+    typedef bool value_type;
+    
     atomic_pod() = default;
     ~atomic_pod() = default;
     atomic_pod(const atomic_pod&) = delete;
@@ -209,6 +212,8 @@ private:
     atomic_pod& operator=(const atomic_pod&);
     
 public:
+    typedef integral_type value_type;
+    
     atomic_pod()
         {}
     ~atomic_pod()
@@ -331,6 +336,8 @@ private:
     atomic_pod& operator=(const atomic_pod<bool>&);
     
 public:
+    typedef integral_type bool;
+    
     atomic_pod()
         {}
     ~atomic_pod() {}

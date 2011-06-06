@@ -9,16 +9,37 @@
 static void
 inner_main (void *closure, int argc, char **argv)
 {
-    file_log::reporting_level() = L_INFO;
+    file_log::reporting_level() = L_DEBUG;
 
     for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
     {
         LOG_INDENT_IF(log_level_t(i), i, i < __MAX_LOG_LEVEL__, "the counter %d", i);
     }
+
+    rt_log::set(__FILE__, 33, rt_log::DISABLED);
+    const int count = 100000000;
+    S_LOG(L_INFO) << "Start file log";
+    // for (int i = 0; i != count; ++i)
+    // {
+    //     S_LOG(L_DEBUG) << "this is not executed";
+    // }
+    S_LOG(L_INFO) << "Start log man";
+    for (int i = 0; i != count; ++i)
+    {
+        bool t = (i % 10000000 == 0);
+        if (t) {
+            rt_log::set(__FILE__, 33, rt_log::ENABLED);
+        }
+        RTS_LOG(L_INFO) << "this is disabled too " << i;
+        if (t) {
+            rt_log::set(__FILE__, 33, rt_log::DISABLED);
+        }
+    }
+    S_LOG(L_INFO) << "End";
     
-    thread_svc svc;
-    svc.initialize();
-    svc.run_event_loop();
+    //thread_svc svc;
+    //svc.initialize();
+    //svc.run_event_loop();
 }
 
 int main(int argc, char *argv[])

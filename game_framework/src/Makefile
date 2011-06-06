@@ -1,6 +1,6 @@
 CXX ?= g++
 
-CXXFLAGS := -g -Wall -pipe -std=c++0x -O2
+CXXFLAGS := -g -Wall -pipe -std=c++0x
 
 GUILE := guile-2.0
 GUILE_CFLAGS := $(shell pkg-config --cflags guile-2.0)
@@ -24,6 +24,11 @@ srcs := $(wildcard *.$(CXXSUFFIX))
 objs := $(subst .$(CXXSUFFIX),.o,$(srcs))
 
 deps := $(addprefix $(dep_dir)/,$(subst .$(CXXSUFFIX),.Tpo,$(srcs)))
+
+lib_stem := gm
+
+static_lib := libgm.a
+
 bin := net_framework
 
 .PHONY: all clean

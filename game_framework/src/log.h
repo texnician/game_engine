@@ -119,6 +119,29 @@ private:
 
 typedef g_log<log2file> file_log;
 
+// runtime log
+namespace rt_log
+{
+    enum rt_log_flag
+    {
+        NOT_INIT = -1,
+        DEFAULT = 0,
+        DISABLED = 1,
+        ENABLED = 2
+    };
+
+    typedef atomic_pod<int> atomic_rt_flag;
+    
+    // Init runtime log flag at file:line
+    void init(atomic_rt_flag& flag, const char* file, int line);
+
+    // Set runtime log flag at file:line
+    void set(const char* file, int line, rt_log_flag flag);
+
+    bool log_enabled(atomic_rt_flag& aflag, log_level_t level,
+                     const char* file, int line);
+};
+
 #define S_LOG_WITHLINE_INDENT_IF(level, file, line, indent, cond)   \
     if (level > FILELOG_MAX_LEVEL);                                 \
     else if (level > file_log::reporting_level());                  \
@@ -148,6 +171,16 @@ typedef g_log<log2file> file_log;
     LOG_INDENT_IF(level, (indent), true, __VA_ARGS__)
 
 #define LOG(level, ...)                         \
-    LOG_IF(level, true, __VA_ARGS__)
+    LOG_INDENT(level, 0, __VA_ARGS__)
+
+#define RTS_LOG(level)                                                  \
+    if (bool already_logged = false);                                   \
+    else for (static rt_log::atomic_rt_flag flag(rt_log::NOT_INIT);     \
+              !already_logged && rt_log::log_enabled(flag, level, __FILE__, __LINE__); \
+              already_logged = true)                                    \
+             S_LOG(level)
+
+#define RT_LOG(level, ...)                      \
+    RTS_LOG(level) << fmt_log(__VA_ARGS__)
 
 #endif  // _LOG_H_
