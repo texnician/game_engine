@@ -6,10 +6,30 @@
 #include "sid.h"
 #include "log.h"
 
+struct gard 
+    {
+        explicit gard(bool v, const char* file, int line)
+            : v_(v), str_ptr(file), line_(line)
+            {
+                if (v_) {
+                    rt_log::set(str_ptr, line_, rt_log::ENABLED);
+                }
+            }
+        ~gard()
+            {
+                if (v_) {
+                    rt_log::set(str_ptr, line_, rt_log::DISABLED);
+                }
+            }
+        bool v_;
+        const char *str_ptr;
+        int line_;
+    };
+
 static void
 inner_main (void *closure, int argc, char **argv)
 {
-    file_log::reporting_level() = L_DEBUG;
+    file_log::reporting_level() = L_INFO;
 
     for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
     {
@@ -24,16 +44,11 @@ inner_main (void *closure, int argc, char **argv)
     //     S_LOG(L_DEBUG) << "this is not executed";
     // }
     S_LOG(L_INFO) << "Start log man";
+    
     for (int i = 0; i != count; ++i)
     {
-        bool t = (i % 10000000 == 0);
-        if (t) {
-            rt_log::set(__FILE__, 33, rt_log::ENABLED);
-        }
+        gard l(i % 10000000 == 0, __FILE__, __LINE__ + 1);
         RTS_LOG(L_INFO) << "this is disabled too " << i;
-        if (t) {
-            rt_log::set(__FILE__, 33, rt_log::DISABLED);
-        }
     }
     S_LOG(L_INFO) << "End";
     
