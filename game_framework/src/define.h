@@ -62,6 +62,4 @@ typedef struct sockaddr SA;
   #define WEAK_PTR boost::weak_ptr
 #endif
 
-#include "log.h"
-
 #endif

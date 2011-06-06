@@ -1,5 +1,6 @@
 #include "define.h"
 #include "rio.h"
+#include "log.h"
 
 ssize_t rio_readn(int fd, void *usrbuf, size_t n)
 {

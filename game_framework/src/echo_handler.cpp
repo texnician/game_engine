@@ -1,5 +1,6 @@
 #include "echo_handler.h"
 #include "rio.h"
+#include "log.h"
 
 echo_handle::echo_handle(i_svc *svc, HANDLE fd)
     : svc_(svc), fd_(fd)

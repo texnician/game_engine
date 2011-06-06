@@ -1,6 +1,7 @@
 #include "define.h"
 #include "acceptor.h"
 #include "svc.h"
+#include "log.h"
 
 acceptor::acceptor(i_svc* svc, int port)
     : svc_(svc), listen_port_(port), listen_fd_(0)

@@ -9,7 +9,7 @@
 static void
 inner_main (void *closure, int argc, char **argv)
 {
-    file_log::reporting_level() = L_DEBUG;
+    file_log::reporting_level() = L_INFO;
 
     for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
     {

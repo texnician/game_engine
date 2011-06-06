@@ -3,6 +3,7 @@
 
 #include <pthread.h>
 #include "svc.h"
+#include "log.h"
 
 class thread_svc : public i_svc
 {

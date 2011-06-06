@@ -2,6 +2,7 @@
 #define _LOG_H_
 
 #include <sstream>
+#include "atomic_pod.h"
 
 enum log_level_t {
     L_FATA = 0,     // system is unusable
@@ -48,7 +49,7 @@ public:
                     const char* file = 0, int line = 0);
     
     // Get global reporting level.
-    static log_level_t& reporting_level();
+    static atomic_pod<int>& reporting_level();
     
 private:
     // Disable copy ctor and assigin operator.
@@ -78,9 +79,9 @@ g_log<OutputPolicy>::~g_log()
 }
 
 template<typename OutputPolicy>
-log_level_t& g_log<OutputPolicy>::reporting_level()
+atomic_pod<int>& g_log<OutputPolicy>::reporting_level()
 {
-    static log_level_t global_reporting_level = L_DEBUG;
+    static atomic_pod<int> global_reporting_level(L_DEBUG);
     return global_reporting_level;
 }
 
