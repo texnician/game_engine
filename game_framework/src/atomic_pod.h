@@ -29,23 +29,24 @@ template<typename T>
 struct atomic_pod
 {
 private:
+    typedef T integral_type;
     std::atomic<integral_type> impl_;
     
 public:
-    typedef T integral_type;
 
     atomic_pod() = default;
     ~atomic_pod() = default;
     atomic_pod(integral_type v)
         : impl_(v) 
         {}
-    atomic_pod(const atomic_pod<T>&) = delete;
-    atomic_pod<T>& operator=(const atomic_pod<T>&) = delete;
-
+    atomic_pod(const atomic_pod&) = delete;
+    atomic_pod<T>& operator=(const atomic_pod&) = delete;
+    
     operator integral_type () const volatile
         {
             return impl_.load();
         }
+    
     integral_type operator = (integral_type v)
         {
             impl_.store(v);
@@ -56,10 +57,12 @@ public:
         {
             return impl_.is_lock_free();
         }
+    
     void store(integral_type v) volatile
         {
             impl_.store(v);
         }
+    
     integral_type load() const volatile
         {
             return impl_.load();
@@ -75,31 +78,31 @@ public:
 
     integral_type
     operator++() volatile
-        { return ++impl;}
+        { return ++impl_;}
 
     integral_type
     operator--() volatile
-        { return --impl; }
+        { return --impl_; }
 
     integral_type
     operator+=(integral_type i) volatile
-        { return impl += i; }
+        { return impl_ += i; }
 
     integral_type
     operator-=(integral_type i) volatile
-        { return impl -= i; }
+        { return impl_ -= i; }
 
     integral_type
     operator&=(integral_type i) volatile
-        { return impl &= i; }
+        { return impl_ &= i; }
 
     integral_type
     operator|=(integral_type i) volatile
-        { return impl |= i; }
+        { return impl_ |= i; }
 
     integral_type
     operator^=(integral_type i) volatile
-        { return impl ^= i; }
+        { return impl_ ^= i; }
 
     integral_type exchange(integral_type v) volatile
         {
@@ -141,7 +144,7 @@ public:
     atomic_pod() = default;
     ~atomic_pod() = default;
     atomic_pod(const atomic_pod&) = delete;
-    atomic_pod& operator=(const atomic_pod<bool>&) = delete;
+    atomic_pod& operator=(const atomic_pod&) = delete;
 
     atomic_pod(bool v)
         : impl_(v)
@@ -179,11 +182,11 @@ public:
 
     bool compare_exchange(bool& v1, bool v2) volatile
         {
-            return impl_.exchange(v1, v2);
+            return impl_.compare_exchange_strong(v1, v2);
         }
 };
 
-#else
+#else  // no c++0x support
 #if defined(OS_LINUX) || defined(OS_CYGWIN)
 // If has gcc builtin atomic operation
 #if defined(_GLIBCXX_ATOMIC_BUILTINS_1) && defined(_GLIBCXX_ATOMIC_BUILTINS_2) \
@@ -210,12 +213,12 @@ public:
         {}
     ~atomic_pod()
         {}
-    explicit atomic_pod(integral_type v)
+    atomic_pod(integral_type v)
         {
             pod_ = v;
         }
 
-    operator integral_type () const
+    operator integral_type () const volatile
         {
             return load();
         }
@@ -225,17 +228,17 @@ public:
             return v;
         }
     
-    bool is_lock_free() const
+    bool is_lock_free() const volatile
         {
             return true;
         }
-    void store(integral_type v)
+    void store(integral_type v) volatile
         {
             pod_ = v;
             __sync_synchronize();
         }
     
-    integral_type load() const
+    integral_type load() const volatile
         {
             __sync_synchronize();
             integral_type ret = pod_;
@@ -244,11 +247,11 @@ public:
         }
 
     integral_type
-    operator++(int)
+    operator++(int) volatile
         { return fetch_add(1); }
 
     integral_type
-    operator--(int)
+    operator--(int) volatile
         { return fetch_sub(1); }
 
     integral_type
@@ -260,31 +263,31 @@ public:
         { return __sync_sub_and_fetch(&pod_, 1); }
 
     integral_type
-    operator+=(integral_type i)
+    operator+=(integral_type i) volatile
         { return __sync_add_and_fetch(&pod_, i); }
 
     integral_type
-    operator-=(integral_type i)
+    operator-=(integral_type i) volatile
         { return __sync_sub_and_fetch(&pod_, i); }
 
     integral_type
-    operator&=(integral_type i)
+    operator&=(integral_type i) volatile
         { return __sync_and_and_fetch(&pod_, i); }
 
     integral_type
-    operator|=(integral_type i)
+    operator|=(integral_type i) volatile
         { return __sync_or_and_fetch(&pod_, i); }
 
     integral_type
-    operator^=(integral_type i)
+    operator^=(integral_type i) volatile
         { return __sync_xor_and_fetch(&pod_, i); }
 
-    integral_type exchange(integral_type v)
+    integral_type exchange(integral_type v) volatile
         {
             return __sync_lock_test_and_set(&pod_, v);
         }
     
-    bool compare_exchange(integral_type& v1, integral_type v2)
+    bool compare_exchange(integral_type& v1, integral_type v2) volatile
         {
             integral_type tmp = v1;
             integral_type ret = __sync_val_compare_and_swap(&pod_, tmp, v2);
@@ -293,27 +296,27 @@ public:
             return tmp == ret;
         }
     
-    integral_type fetch_add(integral_type v)
+    integral_type fetch_add(integral_type v) volatile
         {
             return __sync_fetch_and_add(&pod_, v);
         }
     
-    integral_type fetch_sub(integral_type v)
+    integral_type fetch_sub(integral_type v) volatile
         {
             return __sync_fetch_and_sub(&pod_, v);
         }
     
-    integral_type fetch_and(integral_type v)
+    integral_type fetch_and(integral_type v) volatile
         {
             return __sync_fetch_and_and(&pod_, v);
         }
     
-    integral_type fetch_or(integral_type v)
+    integral_type fetch_or(integral_type v) volatile
         {
             return __sync_fetch_and_or(&pod_, v);
         }
     
-    integral_type fetch_xor(integral_type v)
+    integral_type fetch_xor(integral_type v) volatile
         {
             return __sync_fetch_and_xor(&pod_, v);
         }
@@ -344,23 +347,23 @@ public:
             return v;
         }
 
-    operator bool() const
+    operator bool() const volatile
         {
             return load();
         }
 
-    bool is_lock_free() const
+    bool is_lock_free() const volatile
         {
             return true;
         }
 
-    void store(bool v)
+    void store(bool v) volatile
         {
             pod_ = v;
             __sync_synchronize();
         }
     
-    bool load() const
+    bool load() const volatile
         {
             __sync_synchronize();
             bool ret = pod_;
@@ -368,12 +371,12 @@ public:
             return ret;
         }
 
-    bool exchange(bool v)
+    bool exchange(bool v) volatile
         {
             return __sync_lock_test_and_set(&pod_, v);
         }
     
-    bool compare_exchange(bool& v1, bool v2)
+    bool compare_exchange(bool& v1, bool v2) volatile
         {
             bool tmp = v1;
             bool ret = __sync_val_compare_and_swap(&pod_, tmp, v2);
