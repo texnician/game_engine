@@ -227,7 +227,7 @@ namespace rt_log
 
     static void try_set(atomic_rt_flag& flag, rt_log_flag from, rt_log_flag to)
     {
-        // maybe need lock! not thread-safe. MUST be called inside `set'.
+        // not thread-safe. MUST be called inside `set'.
         if (from != to) {
             rt_log_flag tmp = rt_log_flag(flag.load());
             ASSERT(tmp == from);
