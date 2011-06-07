@@ -193,18 +193,19 @@ namespace rt_log
         if (it != get_rt_log_map().end()) {
             // add addr to list
             rt_log_flag &cur_val = it->second.second;
-            same_pos_flag_list &flist = it->second.first;
-            flist.push_back(&aflag);
-            
             rt_log_flag prev = rt_log_flag(aflag.load());
             int tmp = NOT_INIT;
             ASSERT(cur_val != NOT_INIT);
-            aflag.compare_exchange(tmp, cur_val);
-            LOG(L_DEBUG, "Initialized runtime log at %s:%d @%#lx %s -> %s with preset value",
-                file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
-                rtflag2str(rt_log_flag(aflag.load())).c_str());
+            if (aflag.compare_exchange(tmp, cur_val)) {
+                same_pos_flag_list &flist = it->second.first;
+                flist.push_back(&aflag);
+                LOG(L_DEBUG, "Initialized runtime log at %s:%d @%#lx %s -> %s (preset value)",
+                    file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
+                    rtflag2str(rt_log_flag(aflag.load())).c_str());
+            }
             if (prev == cur_val) {
-                LOG(L_DEBUG, "Reset runtime log at %s:%d @%#lx %s -> %s with preset value",
+                LOG(L_DEBUG,
+                    "Runtime log at %s:%d @%#lx alreay initialized: %s -> %s (not reset)",
                     file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
                     rtflag2str(rt_log_flag(aflag.load())).c_str());
             }
@@ -219,7 +220,7 @@ namespace rt_log
             new_list.push_back(&aflag);
             get_rt_log_map()[key] = std::make_pair(new_list, DEFAULT);
             
-            LOG(L_DEBUG, "Initialized runtime log at %s:%d @%#lx %s -> %s",
+            LOG(L_DEBUG, "Initialized runtime log at %s:%d @%#lx %s -> %s (first time)",
                 file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
                 rtflag2str(rt_log_flag(aflag.load())).c_str());
         }
@@ -230,16 +231,20 @@ namespace rt_log
         // not thread-safe. MUST be called inside `set'.
         if (from != to) {
             rt_log_flag tmp = rt_log_flag(flag.load());
-            ASSERT(tmp == from);
+            if (tmp != from) {
+                LOG_INDENT(L_ERROR, 2, "%s != %s", rtflag2str(tmp).c_str(),
+                           rtflag2str(from).c_str());
+                ASSERT(false);
+            }
             flag.exchange(atomic_rt_flag::value_type(to));
-            LOG_INDENT(L_DEBUG, 2, "Set runtime log @ %lx %s -> %s",
+            LOG_INDENT(L_DEBUG, 2, "Set runtime log @%#lx %s -> %s",
                        (uintptr_t)(&flag),
                        rtflag2str(from).c_str(),
                        rtflag2str(rt_log_flag(flag.load())).c_str());
         }
         else {
-            LOG_INDENT(L_ERROR, 2, "Can't reset runtime log to same value %s",
-                       rtflag2str(to).c_str());
+            LOG_INDENT(L_ERROR, 2, "Can't reset runtime log @%#lx to same value %s",
+                       (uintptr_t)(&flag), rtflag2str(to).c_str());
         }
     }
     

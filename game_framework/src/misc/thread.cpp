@@ -2,6 +2,7 @@
 #include<semaphore.h>
 #include "../define.h"
 #include "../atomic_pod.h"
+#include "../log.h"
 
 // volatile int cnt = 0;
 
@@ -16,8 +17,9 @@ void *thread(void *argp);
 
 int main(int argc, char *argv[])
 {
+    file_log::reporting_level() = L_DEBUG;
 
-    int niters = 50000000;
+    int niters = 30;
 
     sem_init(&mutex, 0, 1);
     
@@ -49,9 +51,12 @@ void *thread(void *argp)
     int niters = *((int *)argp);
     for (int i = 0; i < niters; i++) {
         // sem_wait(&mutex);
-        //cnt++;
-        flag.exchange(!flag.load());
-        ++cnt;
+        //flag.exchange(!flag.load());
+        int ret = ++cnt;
+        RT_LOG(L_DEBUG, "1st runtime log %d", ret); RT_LOG(L_DEBUG, "2nd runtime log %d", -ret);
+        if (ret > 5) {
+            rt_log::set(__FILE__, 56, rt_log::DISABLED);
+        }
         // __sync_fetch_and_add(&cnt, 1);
         // sem_post(&mutex);
     }
