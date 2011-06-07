@@ -40,7 +40,7 @@ all: $(bin)
 # -DGC_NO_THREAD_REDIRECTS
 
 %.o: %.$(CXXSUFFIX) Makefile
-	$(CXX) $(CXXFLAGS) $(THREAD_FLAG) -fPIC -MD -MP -MF $(dep_dir)/$*.Tpo -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(THREAD_FLAG) -fPIC -MD -MP -MF $(dir $@)$(dep_dir)/$(notdir $*).Tpo -c -o $@ $<
 
 $(bin): $(objs)
 	$(CXX) $(THREAD_FLAG) $(LDFLAGS) -o $@ $^

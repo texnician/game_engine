@@ -45,7 +45,7 @@ std::string log_now_time()
     struct timeval tv;
     gettimeofday(&tv, 0);
     char result[100] = {0};
-    std::sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec); 
+    sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec); 
     return result;
 }
 
@@ -197,13 +197,15 @@ namespace rt_log
             int tmp = NOT_INIT;
             ASSERT(cur_val != NOT_INIT);
             if (aflag.compare_exchange(tmp, cur_val)) {
+                ASSERT(tmp == NOT_INIT);
                 same_pos_flag_list &flist = it->second.first;
                 flist.push_back(&aflag);
                 LOG(L_DEBUG, "Initialized runtime log at %s:%d @%#lx %s -> %s (preset value)",
                     file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
                     rtflag2str(rt_log_flag(aflag.load())).c_str());
             }
-            if (prev == cur_val) {
+            else  {
+                ASSERT(prev == cur_val && tmp != NOT_INIT);
                 LOG(L_DEBUG,
                     "Runtime log at %s:%d @%#lx alreay initialized: %s -> %s (not reset)",
                     file, line, (uintptr_t)(&aflag), rtflag2str(prev).c_str(),
@@ -237,13 +239,13 @@ namespace rt_log
                 ASSERT(false);
             }
             flag.exchange(atomic_rt_flag::value_type(to));
-            LOG_INDENT(L_DEBUG, 2, "Set runtime log @%#lx %s -> %s",
+            LOG_INDENT(L_DEBUG, 1, "Set runtime log @%#lx %s -> %s",
                        (uintptr_t)(&flag),
                        rtflag2str(from).c_str(),
                        rtflag2str(rt_log_flag(flag.load())).c_str());
         }
         else {
-            LOG_INDENT(L_ERROR, 2, "Can't reset runtime log @%#lx to same value %s",
+            LOG_INDENT(L_ERROR, 1, "Can't reset runtime log @%#lx to same value %s",
                        (uintptr_t)(&flag), rtflag2str(to).c_str());
         }
     }

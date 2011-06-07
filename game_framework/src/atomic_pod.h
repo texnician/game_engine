@@ -206,6 +206,7 @@ struct atomic_pod
 {
 private:
     typedef T integral_type;
+    char stub_;
     integral_type pod_;
 
     atomic_pod(const atomic_pod&);
@@ -336,7 +337,7 @@ private:
     atomic_pod& operator=(const atomic_pod<bool>&);
     
 public:
-    typedef integral_type bool;
+    typedef bool value_type;
     
     atomic_pod()
         {}

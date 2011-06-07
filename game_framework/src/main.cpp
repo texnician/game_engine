@@ -29,7 +29,8 @@ struct gard
 static void
 inner_main (void *closure, int argc, char **argv)
 {
-    file_log::reporting_level() = L_INFO;
+    atomic_pod<int>& rt = file_log::reporting_level();
+    rt = L_INFO;
 
     for (int i = 0; i != __MAX_LOG_LEVEL__; ++i)
     {

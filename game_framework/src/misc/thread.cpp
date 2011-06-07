@@ -17,7 +17,8 @@ void *thread(void *argp);
 
 int main(int argc, char *argv[])
 {
-    file_log::reporting_level() = L_DEBUG;
+    atomic_pod<int>& lv = file_log::reporting_level();
+    lv = L_DEBUG;
 
     int niters = 30;
 
@@ -54,8 +55,8 @@ void *thread(void *argp)
         //flag.exchange(!flag.load());
         int ret = ++cnt;
         RT_LOG(L_DEBUG, "1st runtime log %d", ret); RT_LOG(L_DEBUG, "2nd runtime log %d", -ret);
-        if (ret > 5) {
-            rt_log::set(__FILE__, 56, rt_log::DISABLED);
+        if (ret == 5) {
+            rt_log::set(__FILE__, 57, rt_log::DISABLED);
         }
         // __sync_fetch_and_add(&cnt, 1);
         // sem_post(&mutex);
