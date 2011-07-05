@@ -1,4 +1,5 @@
 #include "define.h"
+#include "socket.h"
 #include "acceptor.h"
 #include "svc.h"
 #include "log.h"
