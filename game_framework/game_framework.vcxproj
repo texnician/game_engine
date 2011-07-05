@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -49,7 +49,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WINDLL%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,6 +75,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\acceptor.cpp" />
+    <ClCompile Include="src\echo_handler.cpp" />
+    <ClCompile Include="src\io_multiplex_svc.cpp" />
+    <ClCompile Include="src\log.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\rio.cpp" />
+    <ClCompile Include="src\scripted_handler.cpp" />
+    <ClCompile Include="src\select_pool.cpp" />
+    <ClCompile Include="src\sid.cpp" />
+    <ClCompile Include="src\simple_svc.cpp" />
+    <ClCompile Include="src\thread_svc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\acceptor.h" />
+    <ClInclude Include="src\assert.h" />
+    <ClInclude Include="src\atomic_pod.h" />
+    <ClInclude Include="src\connector.h" />
+    <ClInclude Include="src\define.h" />
+    <ClInclude Include="src\echo_handler.h" />
+    <ClInclude Include="src\io_multiplex_svc.h" />
+    <ClInclude Include="src\io_pool.h" />
+    <ClInclude Include="src\log.h" />
+    <ClInclude Include="src\mutex.h" />
+    <ClInclude Include="src\net_event_handle.h" />
+    <ClInclude Include="src\os_test.h" />
+    <ClInclude Include="src\rio.h" />
+    <ClInclude Include="src\scripted_handler.h" />
+    <ClInclude Include="src\select_pool.h" />
+    <ClInclude Include="src\sid.h" />
+    <ClInclude Include="src\simple_svc.h" />
+    <ClInclude Include="src\svc.h" />
+    <ClInclude Include="src\svc_actor.h" />
+    <ClInclude Include="src\thread_svc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
