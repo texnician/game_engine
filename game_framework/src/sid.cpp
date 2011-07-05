@@ -52,14 +52,14 @@ sid_t sid::hash_name(const char* str)
         s2 %= BASE;
     }
 
-#if defined(_MSC_VER_)
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable : 4312)
 #endif
 
     return (s2 << 16) | s1;
 
-#if defined(_MSC_VER_)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
         
