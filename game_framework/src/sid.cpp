@@ -1,5 +1,4 @@
 #include <ctype.h>
-#include "define.h"
 #include "sid.h"
 
 const char* const sid::WILDCARD_STR = "*";
