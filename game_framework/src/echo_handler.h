@@ -8,18 +8,18 @@ class i_svc;
 class echo_handle : public i_net_event_handler
 {
 public:
-    echo_handle(i_svc *svc, HANDLE fd);
+    echo_handle(i_svc *svc, GHANDLE fd);
     ~echo_handle();
     
-    virtual HANDLE id() const;
+    virtual GHANDLE id() const;
     
-    virtual int handle_input(HANDLE fd);
+    virtual int handle_input(GHANDLE fd);
 
-    virtual int handle_output(HANDLE fd);
+    virtual int handle_output(GHANDLE fd);
 
 private:
     i_svc *svc_;
-    HANDLE fd_;
+    GHANDLE fd_;
 };
 
 #endif

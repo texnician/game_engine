@@ -6,18 +6,18 @@
 class scripted_handler : public i_net_event_handler
 {
 public:
-    explicit scripted_handler(HANDLE fd);
+    explicit scripted_handler(GHANDLE fd);
 
     ~scripted_handler();
     
-    virtual HANDLE id() const;
+    virtual GHANDLE id() const;
 
-    virtual int handle_input(HANDLE fd);
+    virtual int handle_input(GHANDLE fd);
 
-    virtual int handle_output(HANDLE fd);
+    virtual int handle_output(GHANDLE fd);
 
 private:
-    HANDLE fd_;
+    GHANDLE fd_;
 };
 
 #endif

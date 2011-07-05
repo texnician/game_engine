@@ -2,7 +2,7 @@
 #define _SELECT_POOL_H_
 
 #include <vector>
-#include <sys/select.h>
+#include "socket.h"
 #include "io_pool.h"
 
 class select_pool : public io_pool
@@ -10,9 +10,9 @@ class select_pool : public io_pool
 public:
     explicit select_pool(size_t max_client = 1024);
     
-    virtual int on_add_handler(HANDLE id);
+    virtual int on_add_handler(GHANDLE id);
 
-    virtual int on_remove_handler(HANDLE id);
+    virtual int on_remove_handler(GHANDLE id);
 
     virtual io_event_list get_io_events();
 

@@ -32,7 +32,7 @@ int acceptor::open_listenfd()
 
     // Eliminates "Address already in use" error from bind.
     if (setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,
-                   (const void*)&optval, sizeof(int)) < 0)
+                   (const char*)&optval, sizeof(int)) < 0)
     {
         handle_error("setsockopt");
     }

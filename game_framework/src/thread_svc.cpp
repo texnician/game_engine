@@ -60,7 +60,7 @@ int thread_svc::run_event_loop()
     return 0;
 }
 
-int thread_svc::handle_actor(const i_svc_actor& actor, HANDLE fd)
+int thread_svc::handle_actor(const i_svc_actor& actor, GHANDLE fd)
 {
     return register_handler(handler_ptr(new scripted_handler(fd)));
 }

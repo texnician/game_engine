@@ -14,4 +14,104 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\acceptor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\echo_handler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\io_multiplex_svc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\log.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripted_handler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\select_pool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\simple_svc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread_svc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\acceptor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\assert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\atomic_pod.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\connector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\define.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\echo_handler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\io_multiplex_svc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\io_pool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\log.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mutex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net_event_handle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\os_test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripted_handler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\select_pool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sid.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\simple_svc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\svc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\svc_actor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\thread_svc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

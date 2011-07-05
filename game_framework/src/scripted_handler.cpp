@@ -1,11 +1,13 @@
-#include <sys/syscall.h>
-#include <libguile.h>
 #include "define.h"
+#include <libguile.h>
+#if defined(OS_LINUX)
+#include <sys/syscall.h>
+#endif
 #include "rio.h"
 #include "scripted_handler.h"
 #include "log.h"
 
-scripted_handler::scripted_handler(HANDLE fd)
+scripted_handler::scripted_handler(GHANDLE fd)
     : fd_(fd)
 {
 }
@@ -16,7 +18,7 @@ scripted_handler::~scripted_handler()
 }
 
 
-HANDLE scripted_handler::id() const
+GHANDLE scripted_handler::id() const
 {
     return fd_;
 }
@@ -56,7 +58,7 @@ static SCM preunwind_handler(void *data, SCM key, SCM parameters)
     return SCM_BOOL_T;
 }
 
-int scripted_handler::handle_input(HANDLE fd)
+int scripted_handler::handle_input(GHANDLE fd)
 {
     size_t n;
     char buf[MAXLINE];
@@ -90,7 +92,7 @@ int scripted_handler::handle_input(HANDLE fd)
     }
 }
 
-int scripted_handler::handle_output(HANDLE fd)
+int scripted_handler::handle_output(GHANDLE fd)
 {
     return 0;
 }

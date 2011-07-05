@@ -9,11 +9,11 @@ public:
     virtual ~i_net_event_handler()
         {}
 
-    virtual HANDLE id() const = 0;
+    virtual GHANDLE id() const = 0;
 
-    virtual int handle_input(HANDLE fd) = 0;
+    virtual int handle_input(GHANDLE fd) = 0;
 
-    virtual int handle_output(HANDLE fd) = 0;
+    virtual int handle_output(GHANDLE fd) = 0;
 };
 
 

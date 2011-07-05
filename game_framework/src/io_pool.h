@@ -11,11 +11,11 @@ public:
     
     struct io_pool_event
     {
-        io_pool_event(int ev, HANDLE d)
+        io_pool_event(int ev, GHANDLE d)
             : event(ev), fd(d)
             {}
         int event;
-        HANDLE fd;
+        GHANDLE fd;
     };
 
     typedef std::list<io_pool_event> io_event_list;
@@ -23,9 +23,9 @@ public:
     virtual ~io_pool()
         {}
     
-    virtual int on_add_handler(HANDLE id) = 0;
+    virtual int on_add_handler(GHANDLE id) = 0;
 
-    virtual int on_remove_handler(HANDLE id) = 0;
+    virtual int on_remove_handler(GHANDLE id) = 0;
 
     virtual io_event_list get_io_events() = 0;
 };

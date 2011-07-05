@@ -26,7 +26,7 @@ int io_multiplex_svc::run_event_loop()
     pool_->on_add_handler(ac.id());
     
     while (1) {
-        std::list<HANDLE> obsolete_handlers;
+        std::list<GHANDLE> obsolete_handlers;
         const io_pool::io_event_list events = pool_->get_io_events();
         for (io_pool::io_event_list::const_iterator iter = events.begin();
              iter != events.end(); ++iter)
@@ -50,7 +50,7 @@ int io_multiplex_svc::run_event_loop()
             }
         }
         // Clear obsolete handlers.
-        for (std::list<HANDLE>::const_iterator iter = obsolete_handlers.begin();
+        for (std::list<GHANDLE>::const_iterator iter = obsolete_handlers.begin();
              iter != obsolete_handlers.end(); ++iter)
         {
             remove_handler(*iter);
@@ -59,7 +59,7 @@ int io_multiplex_svc::run_event_loop()
     return 0;
 }
 
-int io_multiplex_svc::remove_handler(HANDLE fd)
+int io_multiplex_svc::remove_handler(GHANDLE fd)
 {
     handler_map::iterator it = handlers_.find(fd);
     if (it != handlers_.end()) {
@@ -72,7 +72,7 @@ int io_multiplex_svc::remove_handler(HANDLE fd)
     }
 }
 
-int io_multiplex_svc::handle_actor(const i_svc_actor& actor, HANDLE fd)
+int io_multiplex_svc::handle_actor(const i_svc_actor& actor, GHANDLE fd)
 {
     return register_handler(handler_ptr(new echo_handle(this, fd)));
 }

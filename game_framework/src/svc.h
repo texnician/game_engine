@@ -7,7 +7,7 @@
 
 class i_net_event_handler;
 typedef SHARED_PTR<i_net_event_handler> handler_ptr;
-typedef std::map<HANDLE, handler_ptr> handler_map;
+typedef std::map<GHANDLE, handler_ptr> handler_map;
 
 class i_svc_actor;
 
@@ -21,7 +21,7 @@ public:
 
     virtual int run_event_loop() = 0;
 
-    virtual int handle_actor(const i_svc_actor& actor, HANDLE fd) = 0;
+    virtual int handle_actor(const i_svc_actor& actor, GHANDLE fd) = 0;
 
     virtual int register_handler(handler_ptr) = 0;
 };

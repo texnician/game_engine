@@ -7,13 +7,13 @@ select_pool::select_pool(size_t max_client)
     FD_ZERO(&read_set_);
 }
 
-int select_pool::on_add_handler(HANDLE id)
+int select_pool::on_add_handler(GHANDLE id)
 {
     fd_vec::iterator it = std::find(fd_vec_.begin(), fd_vec_.end(), -1);
     if (it != fd_vec_.end()) {
         *it = id;
-        maxfd_ = std::max(id, maxfd_);
-        maxi_ = std::max(int(std::distance(fd_vec_.begin(), it)), maxi_);
+        maxfd_ = STD_MAX(id, maxfd_);
+        maxi_ = STD_MAX(int(std::distance(fd_vec_.begin(), it)), maxi_);
         FD_SET(id, &read_set_);
         return 0;
     }
@@ -23,7 +23,7 @@ int select_pool::on_add_handler(HANDLE id)
     }
 }
 
-int select_pool::on_remove_handler(HANDLE id)
+int select_pool::on_remove_handler(GHANDLE id)
 {
     fd_vec::iterator it = std::find(fd_vec_.begin(),
                                     fd_vec_.begin()+maxi_+1,

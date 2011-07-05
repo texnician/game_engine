@@ -2,7 +2,7 @@
 #define _MUTEX_H_
 
 // With cxx0x support
-#if defined(_CXX0X_)
+#if defined(_CXX0X_THREAD_)
 #include <mutex>
 
 typedef std::mutex g_mutex;

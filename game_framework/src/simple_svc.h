@@ -14,7 +14,7 @@ public:
 
     virtual int run_event_loop();
 
-    virtual int handle_actor(const i_svc_actor& actor, HANDLE fd);
+    virtual int handle_actor(const i_svc_actor& actor, GHANDLE fd);
 
     virtual int register_handler(handler_ptr);
 

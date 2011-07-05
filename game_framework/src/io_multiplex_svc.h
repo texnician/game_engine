@@ -16,12 +16,12 @@ public:
 
     virtual int run_event_loop();
 
-    virtual int handle_actor(const i_svc_actor& actor, HANDLE fd);
+    virtual int handle_actor(const i_svc_actor& actor, GHANDLE fd);
 
     virtual int register_handler(handler_ptr);
 
 private:
-    int remove_handler(HANDLE fd);
+    int remove_handler(GHANDLE fd);
 
     handler_map handlers_;
     UNIQUE_PTR<io_pool> pool_;

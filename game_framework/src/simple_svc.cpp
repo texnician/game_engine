@@ -41,7 +41,7 @@ int simple_svc::register_handler(handler_ptr p)
     return 0;
 }
 
-int simple_svc::handle_actor(const i_svc_actor& actor, HANDLE fd)
+int simple_svc::handle_actor(const i_svc_actor& actor, GHANDLE fd)
 {
     register_handler(handler_ptr(new echo_handle(this, fd)));
     

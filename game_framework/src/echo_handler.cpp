@@ -2,7 +2,7 @@
 #include "rio.h"
 #include "log.h"
 
-echo_handle::echo_handle(i_svc *svc, HANDLE fd)
+echo_handle::echo_handle(i_svc *svc, GHANDLE fd)
     : svc_(svc), fd_(fd)
 {}
 
@@ -11,12 +11,12 @@ echo_handle::~echo_handle()
     close(fd_);
 }
 
-HANDLE echo_handle::id() const
+GHANDLE echo_handle::id() const
 {
     return fd_;
 }
 
-int echo_handle::handle_input(HANDLE fd)
+int echo_handle::handle_input(GHANDLE fd)
 {
     size_t n;
     char buf[MAXLINE];
@@ -32,7 +32,7 @@ int echo_handle::handle_input(HANDLE fd)
     }
 }
 
-int echo_handle::handle_output(HANDLE fd)
+int echo_handle::handle_output(GHANDLE fd)
 {
     return 0;
 }
