@@ -48,6 +48,9 @@
     <ClCompile Include="src\thread_svc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\py_interface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\acceptor.h">
@@ -111,6 +114,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\py_interface.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

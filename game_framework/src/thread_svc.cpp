@@ -1,4 +1,5 @@
 #include "define.h"
+#if defined(OS_LINUX)
 #include <libguile.h>
 #include "thread_svc.h"
 #include "echo_handler.h"
@@ -116,3 +117,4 @@ int thread_svc::register_handler(handler_ptr p)
     thread_map_[thread_id_] = tid;
     return 0;
 }
+#endif

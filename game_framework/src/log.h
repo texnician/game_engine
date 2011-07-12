@@ -61,15 +61,15 @@ private:
     oss oss_;
 };
 
-const char* level_c_str(const log_level_t& level);
+DLL_API const char* level_c_str(const log_level_t& level);
 
-const char* level_abbrev_c_str(const log_level_t& level);
+DLL_API const char* level_abbrev_c_str(const log_level_t& level);
 
-std::string log_now_time();
+std::string DLL_API log_now_time();
 
-std::string fmt_log(const char* fmt, ...);
+std::string DLL_API fmt_log(const char* fmt, ...);
 
-pid_t get_tid();
+DLL_API pid_t get_tid();
 
 template<typename OutputPolicy>
 g_log<OutputPolicy>::~g_log()
@@ -106,7 +106,7 @@ oss& g_log<OutputPolicy>::get_stream(log_level_t level, int indent,
 
 typedef FILE* file_ptr;
 
-class log2file
+class DLL_API log2file
 {
 public:
     static void set_file_stream(const file_ptr& ptr);

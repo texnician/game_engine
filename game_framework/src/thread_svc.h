@@ -1,6 +1,7 @@
 #ifndef _THREAD_SVC_H_
 #define _THREAD_SVC_H_
 
+#if defined(__linux__)
 #include <pthread.h>
 #include "svc.h"
 #include "log.h"
@@ -44,4 +45,5 @@ private:
     thread_map thread_map_;
 };
 
+#endif  // __linux__
 #endif

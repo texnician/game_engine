@@ -1,4 +1,5 @@
 #include "define.h"
+#if defined(OS_LINUX)
 #include <libguile.h>
 #if defined(OS_LINUX)
 #include <sys/syscall.h>
@@ -96,3 +97,4 @@ int scripted_handler::handle_output(GHANDLE fd)
 {
     return 0;
 }
+#endif

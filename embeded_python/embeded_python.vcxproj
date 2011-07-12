@@ -11,15 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C4BE9797-7C3C-45F5-BB75-D846A597988D}</ProjectGuid>
+    <ProjectGuid>{88404FF8-0BE5-40F8-B4C1-C59654459522}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>game_framework</RootNamespace>
+    <RootNamespace>embeded_python</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -32,11 +33,9 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Users\tyg\Documents\Visual Studio 2010\boost.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Users\tyg\Documents\Visual Studio 2010\boost.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -51,17 +50,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Python32\include\Stackless;..\game_framework\src;D:\Python32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>D:\Python32\include\Stackless;D:\Python32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Python32\libs;D:\boost_1_46_1\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>python32_d.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\bin\$(TargetName)d$(TargetExt)</OutputFile>
-      <ImportLibrary>.\lib\$(TargetName)d.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\game_framework\lib;D:\Python32\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>game_frameworkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,52 +69,20 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\acceptor.cpp" />
-    <ClCompile Include="src\echo_handler.cpp" />
-    <ClCompile Include="src\io_multiplex_svc.cpp" />
-    <ClCompile Include="src\log.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\py_interface.cpp" />
-    <ClCompile Include="src\rio.cpp" />
-    <ClCompile Include="src\scripted_handler.cpp" />
-    <ClCompile Include="src\select_pool.cpp" />
-    <ClCompile Include="src\sid.cpp" />
-    <ClCompile Include="src\simple_svc.cpp" />
-    <ClCompile Include="src\thread_svc.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\acceptor.h" />
-    <ClInclude Include="src\assert.h" />
-    <ClInclude Include="src\atomic_pod.h" />
-    <ClInclude Include="src\connector.h" />
-    <ClInclude Include="src\define.h" />
-    <ClInclude Include="src\echo_handler.h" />
-    <ClInclude Include="src\io_multiplex_svc.h" />
-    <ClInclude Include="src\io_pool.h" />
-    <ClInclude Include="src\log.h" />
-    <ClInclude Include="src\mutex.h" />
-    <ClInclude Include="src\net_event_handle.h" />
-    <ClInclude Include="src\os_test.h" />
-    <ClInclude Include="src\py_interface.h" />
-    <ClInclude Include="src\rio.h" />
-    <ClInclude Include="src\scripted_handler.h" />
-    <ClInclude Include="src\select_pool.h" />
-    <ClInclude Include="src\sid.h" />
-    <ClInclude Include="src\simple_svc.h" />
-    <ClInclude Include="src\socket.h" />
-    <ClInclude Include="src\svc.h" />
-    <ClInclude Include="src\svc_actor.h" />
-    <ClInclude Include="src\thread_svc.h" />
+    <None Include="stackless.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

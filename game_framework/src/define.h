@@ -82,12 +82,19 @@ typedef int GHANDLE;
 #endif  // OS_WINDOWS
 
 #if defined(OS_WINDOWS)
+#if !defined(HAVE_SSIZE_T)
 typedef SSIZE_T ssize_t;
 typedef DWORD pid_t;
+#endif
 #endif  // OS_WINDOWS
 
 #if !defined(STDIN_FILENO) && defined(OS_WINDOWS)
 #define STDIN_FILENO 0
 #endif
 
+#if defined(_WINDLL)
+#define DLL_API __declspec(dllexport)
+#else
+#define DLL_API __declspec(dllimport)
+#endif
 #endif
