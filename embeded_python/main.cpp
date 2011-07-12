@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     PyRun_SimpleString("import spam\n"
                        "xx = spam.SpamCall('abcd')\n"
                        "print(xx)\n");
-    PyRun_SimpleString("exec(open('stackless.py').read())");
+    PyRun_SimpleString("with open('stackless.py') as ss: exec(ss.read())");
     // FILE * fp = fopen("stackless.py", "r");
     // if (fp == NULL)
     //     return 1;
