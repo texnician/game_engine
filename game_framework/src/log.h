@@ -69,7 +69,7 @@ std::string DLL_API log_now_time();
 
 std::string DLL_API fmt_log(const char* fmt, ...);
 
-DLL_API pid_t get_tid();
+int DLL_API get_tid();
 
 template<typename OutputPolicy>
 g_log<OutputPolicy>::~g_log()

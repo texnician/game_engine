@@ -64,7 +64,7 @@ std::string log_now_time()
     char result[100] = {0};
     static DWORD first = GetTickCount();
     std::sprintf(result, "%s.%06ld", buffer, (long)(GetTickCount() - first)); 
-    return result;
+    return std::string(result);
 }
 
 #endif  // __linux__
@@ -111,7 +111,7 @@ void log2file::out_put(const std::string& msg)
 #include <sys/syscall.h>
 #endif
 
-pid_t get_tid()
+int get_tid()
 {
 #if defined(__linux__)
 #ifndef __NR_gettid

@@ -87,6 +87,7 @@
     <ClCompile Include="src\io_multiplex_svc.cpp" />
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\object_ptr_table.cpp" />
     <ClCompile Include="src\py_interface.cpp" />
     <ClCompile Include="src\rio.cpp" />
     <ClCompile Include="src\scripted_handler.cpp" />
@@ -107,6 +108,8 @@
     <ClInclude Include="src\log.h" />
     <ClInclude Include="src\mutex.h" />
     <ClInclude Include="src\net_event_handle.h" />
+    <ClInclude Include="src\object_handler.h" />
+    <ClInclude Include="src\object_ptr_table.h" />
     <ClInclude Include="src\os_test.h" />
     <ClInclude Include="src\py_interface.h" />
     <ClInclude Include="src\rio.h" />

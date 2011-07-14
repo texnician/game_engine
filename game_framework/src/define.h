@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <stdint.h>
 #if defined(OS_LINUX)
 #include <sys/types.h>          /* See NOTES */
 #include <sys/socket.h>
