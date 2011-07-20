@@ -63,7 +63,7 @@ std::string log_now_time()
 
     char result[100] = {0};
     static DWORD first = GetTickCount();
-    std::sprintf(result, "%s.%06ld", buffer, (long)(GetTickCount() - first)); 
+    std::sprintf(result, "%s.%06ld", buffer, (long)(GetTickCount() - first));
     return std::string(result);
 }
 
@@ -73,6 +73,14 @@ std::string fmt_log(const char* fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
+    std::string result = vfmt_log(fmt, ap);
+    va_end(ap);
+
+    return result;
+}
+
+std::string vfmt_log(const char* fmt, va_list ap)
+{
     char buf[MAXLINE];
     memset(buf, 0, sizeof(buf));
 #if defined(__linux__)
@@ -80,10 +88,25 @@ std::string fmt_log(const char* fmt, ...)
 #else
     vsnprintf_s(buf, sizeof(buf), _TRUNCATE, fmt, ap);
 #endif
-    va_end(ap);
-
-    return std::string(buf);
+    return buf;
 }
+
+#if defined(OS_WINDOWS)
+size_t safe_log_now_time(char* buf, size_t len)
+{
+    std::string time_str = log_now_time();
+    return move_string(buf, len, time_str);
+}
+
+size_t safe_fmt_log(char* buf, size_t len, const char* fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    std::string result = vfmt_log(fmt, ap);
+    va_end(ap);
+    return move_string(buf, len, result);
+}
+#endif
 
 file_ptr& log2file::get_file_stream()
 {
@@ -295,4 +318,10 @@ namespace rt_log
         return (cur_val == DEFAULT && file_log::reporting_level() >= level)
             || cur_val == ENABLED;
     }
+}
+
+size_t move_string(char *buf, size_t len, std::string& src)
+{
+    strncpy(buf, src.c_str(), len);
+    return strlen(buf);
 }

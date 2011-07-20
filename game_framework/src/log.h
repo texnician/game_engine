@@ -61,13 +61,23 @@ private:
     oss oss_;
 };
 
+DLL_API size_t move_string(char *buf, size_t len, std::string& src);
+
 DLL_API const char* level_c_str(const log_level_t& level);
 
 DLL_API const char* level_abbrev_c_str(const log_level_t& level);
 
-std::string DLL_API log_now_time();
+#if defined(OS_WINDOWS)
+DLL_API size_t safe_log_now_time(char* buf, size_t len);
 
-std::string DLL_API fmt_log(const char* fmt, ...);
+DLL_API size_t safe_fmt_log(char* buf, size_t len, const char* fmt, ...);
+#endif
+
+std::string log_now_time();
+
+std::string fmt_log(const char* fmt, ...);
+
+std::string vfmt_log(const char* fmt, va_list vargs);
 
 int DLL_API get_tid();
 
@@ -90,7 +100,13 @@ oss& g_log<OutputPolicy>::get_stream(log_level_t level, int indent,
                                      const char* file, int line)
 {
     oss_ << level_abbrev_c_str(level);
+#if defined(OS_WINDOWS)
+    char buf[64];
+    safe_log_now_time(buf, 64);
+    oss_ << ' ' << buf;
+#else
     oss_ << ' ' << log_now_time();
+#endif
     oss_ << ' ' << get_tid();
     if (file != 0 && line > 0) {
         oss_ << ' ' << file << ':' << line;
@@ -161,8 +177,19 @@ namespace rt_log
 #define S_LOG(level)                            \
     S_LOG_INDENT(level, 0)
 
+#if defined(OS_WINDOWS)
+#define LOG_INDENT_IF(level, indent, cond, ...)                         \
+    do {                                                                \
+        char __fmt_buf__[MAXLINE] = {0};                                \
+        safe_fmt_log(__fmt_buf__, MAXLINE, __VA_ARGS__);                \
+        S_LOG_WITHLINE_INDENT_IF(level, __FILE__, __LINE__, indent, (cond)) \
+            << __fmt_buf__;                                             \
+    } while (0)
+    
+#else
 #define LOG_INDENT_IF(level, indent, cond, ...)                         \
     S_LOG_WITHLINE_INDENT_IF(level, __FILE__, __LINE__, indent, (cond)) << fmt_log(__VA_ARGS__)
+#endif
 
 #define LOG_IF(level, cond, ...)                    \
     LOG_INDENT_IF(level, 0, (cond), __VA_ARGS__)
@@ -180,7 +207,16 @@ namespace rt_log
               already_logged = true)                                    \
              S_LOG(level)
 
+#if defined(OS_WINDOWS)
+#define RT_LOG(level, ...)                                              \
+    do {                                                                \
+        char __fmt_buf__[MAXLINE] = {0};                                \
+        safe_fmt_log(__fmt_buf__, MAXLINE, __VA_ARGS__);                \
+        RTS_LOG(level) << __fmt_buf__;                                  \
+    } while (0)
+#else
 #define RT_LOG(level, ...)                      \
     RTS_LOG(level) << fmt_log(__VA_ARGS__)
+#endif
 
 #endif  // _LOG_H_

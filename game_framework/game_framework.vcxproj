@@ -41,6 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,8 +62,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\Python32\libs;D:\boost_1_46_1\stage\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>python32_d.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\bin\$(TargetName)d$(TargetExt)</OutputFile>
-      <ImportLibrary>.\lib\$(TargetName)d.lib</ImportLibrary>
+      <OutputFile>$(TargetPath)</OutputFile>
+      <ImportLibrary>.\lib\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

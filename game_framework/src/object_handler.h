@@ -38,17 +38,17 @@ template<typename T>
 class ObjectHandler
 {
 public:
+    ObjectHandler()
+        : obj_id_(0), slot_idx_(-1)
+        {}
+    
     explicit ObjectHandler(T& obj)
-        {
-            obj_id_ = obj.object_id_;
-            slot_idx_ = obj.slot_idx_;
-        }
+        : obj_id_(obj.object_id_), slot_idx_(obj.slot_idx_)
+        {}
 
     ObjectHandler(const ObjectHandler<T>& rhs)
-        {
-            obj_id_ = rhs.obj_id_;
-            slot_idx_ = rhs.slot_idx_;
-        }
+        : obj_id_(rhs.obj_id_), slot_idx_(rhs.slot_idx_)
+        {}
 
     ObjectHandler& operator= (const ObjectHandler<T>& rhs)
         {
@@ -68,8 +68,12 @@ public:
                 return NULL;
             }
         }
-    
-    friend bool operator== (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs);
+
+    template<typename U>
+    friend bool operator== (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
+
+    template<typename U>
+    friend inline bool operator!= (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
     
 private:
     ObjectId obj_id_;
@@ -77,9 +81,15 @@ private:
 };
 
 template<typename T>
-inline bool operator== (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
+bool operator== (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
 {
     return lhs.obj_id_ == rhs.obj_id_ && lhs.slot_idx_ == rhs.slot_idx_;
+}
+
+template<typename T>
+bool operator!= (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
+{
+    return !(lhs == rhs)
 }
 
 #endif
