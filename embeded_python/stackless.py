@@ -51,7 +51,7 @@ if __name__ == '__main__':
     # stackless.tasklet(sending_tasklet)()
     stackless.tasklet(another_tasklet)()
 
-    stackless.tasklet(ping)()
-    stackless.tasklet(pong)()
-    stackless.tasklet(ping_channel.send)('startup')
+    #stackless.tasklet(ping)()
+    #stackless.tasklet(pong)()
+    #stackless.tasklet(ping_channel.send)('startup')
     stackless.run()
