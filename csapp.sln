@@ -7,14 +7,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "embeded_python", "embeded_p
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_PyModule|Win32 = Debug_PyModule|Win32
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Debug_PyModule|Win32.ActiveCfg = Debug_PyModule|Win32
+		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Debug_PyModule|Win32.Build.0 = Debug_PyModule|Win32
 		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Debug|Win32.Build.0 = Debug|Win32
 		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Release|Win32.ActiveCfg = Release|Win32
 		{C4BE9797-7C3C-45F5-BB75-D846A597988D}.Release|Win32.Build.0 = Release|Win32
+		{88404FF8-0BE5-40F8-B4C1-C59654459522}.Debug_PyModule|Win32.ActiveCfg = Debug|Win32
+		{88404FF8-0BE5-40F8-B4C1-C59654459522}.Debug_PyModule|Win32.Build.0 = Debug|Win32
 		{88404FF8-0BE5-40F8-B4C1-C59654459522}.Debug|Win32.ActiveCfg = Debug|Win32
 		{88404FF8-0BE5-40F8-B4C1-C59654459522}.Debug|Win32.Build.0 = Debug|Win32
 		{88404FF8-0BE5-40F8-B4C1-C59654459522}.Release|Win32.ActiveCfg = Release|Win32

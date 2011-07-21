@@ -8,6 +8,12 @@ size_t ObjectPtrTable::free_size_ = 0;
 ObjectSlotIdx ObjectPtrTable::head_ = -1;
 ObjectPtrTable::Slot* ObjectPtrTable::table_ = 0;
 
+ObjectId GetUniqObjectId()
+{
+    static ObjectId id = 0;
+    return id++;
+}
+
 ObjectPtrTable::ObjectPtrTable()
 {}
 
@@ -64,9 +70,15 @@ size_t ObjectPtrTable::FreeSize() const
 
 HandlableObject* ObjectPtrTable::Find(ObjectSlotIdx idx) const
 {
-    assert(idx < max_size_ && "idx > max_size");
-    Slot& slot = table_[idx];
-    return slot.empty ? NULL : (HandlableObject*)(slot.ptr);
+    if (idx < max_size_ && idx >= 0) {
+        assert(idx < max_size_ && "idx > max_size");
+        Slot& slot = table_[idx];
+        return slot.empty ? NULL : (HandlableObject*)(slot.ptr);
+    }
+    else {
+        LOG(L_WARNING, "idx = %d, max_size_ = %d", idx, max_size_);
+        return NULL;
+    }
 }
 
 ObjectSlotIdx ObjectPtrTable::GetSlotIndex(HandlableObject& obj)

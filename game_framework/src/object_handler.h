@@ -5,11 +5,7 @@
 #include "log.h"
 #include "object_ptr_table.h"
 
-ObjectId GetUniqObjectId()
-{
-    static ObjectId id = 0;
-    return id++;
-}
+ObjectId GetUniqObjectId();
 
 class DLL_API HandlableObject
 {
@@ -69,27 +65,36 @@ public:
             }
         }
 
-    template<typename U>
-    friend bool operator== (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
+    bool operator== (const ObjectHandler<T>& rhs) const
+        {
+            return this->obj_id_ == rhs.obj_id_ && this->slot_idx_ == rhs.slot_idx_;
+        }
 
-    template<typename U>
-    friend inline bool operator!= (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
+    bool operator!= (const ObjectHandler<T>& rhs) const
+        {
+            return !(*this == rhs);
+        }
     
+    // template<typename U>
+    // friend bool operator== (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
+
+    // template<typename U>
+    // friend inline bool operator!= (const ObjectHandler<U>& lhs, const ObjectHandler<U>& rhs);
 private:
     ObjectId obj_id_;
     ObjectSlotIdx slot_idx_;
 };
 
-template<typename T>
-bool operator== (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
-{
-    return lhs.obj_id_ == rhs.obj_id_ && lhs.slot_idx_ == rhs.slot_idx_;
-}
+// template<typename T>
+// bool operator== (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
+// {
+//     return lhs.obj_id_ == rhs.obj_id_ && lhs.slot_idx_ == rhs.slot_idx_;
+// }
 
-template<typename T>
-bool operator!= (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
-{
-    return !(lhs == rhs)
-}
+// template<typename T>
+// bool operator!= (const ObjectHandler<T>& lhs, const ObjectHandler<T>& rhs)
+// {
+//     return !(lhs == rhs)
+// }
 
 #endif
