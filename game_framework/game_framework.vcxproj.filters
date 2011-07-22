@@ -57,6 +57,9 @@
     <ClCompile Include="src\game_framework.cxx">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\protocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\acceptor.h">
@@ -129,6 +132,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\object_ptr_table.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\protocol.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
