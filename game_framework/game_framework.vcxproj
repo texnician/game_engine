@@ -100,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Python32\libs;D:\boost_1_46_1\stage\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(PythonDebugLibDir);D:\boost_1_46_1\stage\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>python32_d.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetPath)</OutputFile>
       <ImportLibrary>.\lib\$(TargetName).lib</ImportLibrary>
@@ -170,8 +170,21 @@
   <ItemGroup>
     <CustomBuild Include="src\game_framework.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">swig -c++ -python -builtin -py3 -O -o $(ProjectDir)src\game_framework.cxx $(ProjectDir)src\game_framework.i </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework.cxx;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">python $(ProjectDir)src\parse_array.py $(ProjectDir)src\game_framework.i $(ProjectDir)src\game_framework_array.i </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework_array.i;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\parse_array.py</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">Parsing Swig Carrays</Message>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\game_framework_array.i" />
+    <None Include="src\parse_array.py" />
+    <CustomBuild Include="src\py_interface.i">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">swig -c++ -python -py3 -modern -O -o $(ProjectDir)src\game_framework.cxx $(ProjectDir)src\py_interface.i </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework.cxx</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework.i;$(ProjectDir)src\game_framework_array.i;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">Generating Swig Wrapper Code</Message>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -142,5 +142,14 @@
     <CustomBuild Include="src\game_framework.i">
       <Filter>头文件</Filter>
     </CustomBuild>
+    <CustomBuild Include="src\py_interface.i">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\parse_array.py" />
+    <None Include="src\game_framework_array.i">
+      <Filter>头文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

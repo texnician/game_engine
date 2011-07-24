@@ -14,12 +14,6 @@
 %pybuffer_mutable_string(char *out_buf);
 %pybuffer_string(char *in_buf);
 
-%include carrays.i
-%array_class(ROLE_INFO, ROLE_INFOArray)
-     
-%include cdata.i
-%cdata(ROLE_INFO)
-
 %include "protocol.h"  
 
 %template(GameObjectHandler) ObjectHandler<HandlableObject>;

@@ -10,11 +10,30 @@
 #define MAX_REQ_DATA_LEN 512
 #define MAX_TITILE_LEN 128
 #define MAX_INFO_NUM 10
+#define MAX_ACC_NAME_LEN 10
+#define MAX_PASSWORD_LEN 64
+
+struct Opt
+{
+    char a;
+    char b;
+};
+
+struct ACC_INFO
+{
+    int id;
+    char username[MAX_ACC_NAME_LEN];
+    char password[MAX_PASSWORD_LEN];
+    int opt_num;
+    Opt opt[512];
+};
 
 struct PKG_TEST_REQ
 {
     char name[MAX_NAME_LEN];
     int type;
+    int info_num;
+    ACC_INFO acc_info[MAX_INFO_NUM];
 };
 
 struct ROLE_INFO
