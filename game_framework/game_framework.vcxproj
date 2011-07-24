@@ -177,6 +177,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\carray.py" />
     <None Include="src\game_framework_array.i" />
     <None Include="src\parse_array.py" />
     <CustomBuild Include="src\py_interface.i">
