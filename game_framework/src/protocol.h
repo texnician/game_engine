@@ -33,6 +33,7 @@ struct PKG_TEST_REQ
     char name[MAX_NAME_LEN];
     int type;
     int info_num;
+    unsigned char uarray[512];
     ACC_INFO acc_info[MAX_INFO_NUM];
 };
 

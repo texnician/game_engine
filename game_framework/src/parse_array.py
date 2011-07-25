@@ -33,7 +33,7 @@ def MatchAny():
 def MatchMemberIn(filter_func):
     def DoFilte(obj):
         text, _type_, name, typemap = filter_func(obj)
-        result = re.search('''.* : Typemap for (.+) ([a-zA-Z_]\w+\[.*\]) \(memberin\) : %typemap\(memberin\) (.*\[.*\])$''', text)
+        result = re.search('''.* : Typemap for (.+) ([a-zA-Z_]\w+\[.*\]) \(memberin\) : %typemap\(memberin\) (SWIGTYPE \[.*\])$''', text)
         if result:
             _type_, name, typemap = result.group(1, 2, 3)
             return text, _type_, name, typemap
@@ -57,7 +57,7 @@ def MatchedLines(src, match_func):
             yield obj
             
 def ArrayClass(type_table):
-    return ['%array_class({0}, {1})'.format(v, v + '_Array') for v in type_table]
+    return ['%array_functions({0}, {1})'.format(v, v + '_Array') for v in type_table]
 
 def CData(type_table):
     return ['%cdata({0})'.format(v) for v in type_table]
@@ -69,12 +69,47 @@ def OutPut(type_table, out_file):
 %include carrays.i
 %include cdata.i
 '''.format(__file__))
-        
+        print('%pybuffer_mutable_string(char *outMemBuf);')
+        print('%pybuffer_string(const char *inMemBuf);')
+
         for item in type_table:
             print('/* {0} */'.format(item))
-            print('%array_class({0}, {1})'.format(item, item + '_Array'))
-            print('%cdata({0})'.format(item))
+            joined_name = '_'.join(item.split(' '))
+            print('%array_funtions({0}, {1})'.format(item, joined_name + '_Array'))
+
+        print('%inline %{')
+        for item in type_table:
             print('')
+            print('/* {0} */'.format(item))
+            print('    size_t sizeof_{0}() {{ return sizeof({1}); }}'.format(joined_name, item))
+            print('')
+            print('    PyObject* {0}_ArrayFromBuffer({1} *outArrayBuf, int outArrayItemNumber,'.format(joined_name, item))
+            print('                                  const char *inMemBuf, int inMemBufSize)')
+            print('    {')
+            print('        if (outArrayItemNumber * sizeof({0}) >= inMemBufSize) {{'.format(item))
+            print('            memcpy(outArrayBuf, inMemBuf, inMemBufSize);')
+            print('            return PyInt_FromLong(inMemBufSize);')
+            print('        }')
+            print('        else {')
+            print('            return Py_None;')
+            print('        }')
+            print('     }')
+            print('')
+            print('     PyObject* {0}_ArrayToBuffer(char *outMemBuf, int outMemBufSize,'.format(joined_name))
+            print('                                 {0} *inArrayBuf, int inArrayItemNumber)'.format(item))
+            print('     {')
+            print('         size_t in_array_size = sizeof({0}) * inArrayItemNumber;'.format(item))
+            print('         if (outMemBufSize >= in_array_size) {')
+            print('             memcpy(outMemBuf, inArrayBuf, in_array_size);')
+            print('             return PyInt_FromLong(in_array_size);')
+            print('         }')
+            print('         else {')
+            print('             return Py_None;')
+            print('         }')
+            print('      }')
+        print('%}')
+        print('')
+            
         print('''/* {0} Ends here. */'''.format(out_file.name))
 
 def SwigParseTypemap(src_file):
@@ -91,8 +126,8 @@ def Parse(src_file, dest_file=None):
     swig_out_file = SwigParseTypemap(src_file)
 
     type_table = {}
-    #match_func = MatchMemberIn(MatchAny())
-    match_func = FilterCharType(MatchMemberIn(MatchAny()))
+    match_func = MatchMemberIn(MatchAny())
+    #match_func = FilterCharType(MatchMemberIn(MatchAny()))
     # parse swig output file
     with open(swig_out_file) as swig_out:
         type_table = {item[1] for item in MatchedLines(swig_out, match_func)}

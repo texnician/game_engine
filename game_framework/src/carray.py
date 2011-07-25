@@ -1,6 +1,7 @@
 class CArray:
-    def __init__(self, ptr, num):
-        pass
+    def __init__(self, array, num):
+        self.array = array
+        self.num = num
 
     def __iter__(self):
         pass
@@ -9,7 +10,7 @@ class CArray:
         pass
 
     def __len__(self):
-        pass
+        return self.num
     
     def __contains__(self):
         pass
@@ -17,3 +18,6 @@ class CArray:
     def __missing__(self):
         pass
     
+    def MemMove(self, source, ):
+        if len 
+        

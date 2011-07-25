@@ -182,7 +182,7 @@
     <None Include="src\parse_array.py" />
     <CustomBuild Include="src\py_interface.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">swig -c++ -python -py3 -modern -O -o $(ProjectDir)src\game_framework.cxx $(ProjectDir)src\py_interface.i </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">swig -c++ -python -py3 -builtin -modern -O -o $(ProjectDir)src\game_framework.cxx $(ProjectDir)src\py_interface.i </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework.cxx</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">$(ProjectDir)src\game_framework.i;$(ProjectDir)src\game_framework_array.i;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug_PyModule|Win32'">Generating Swig Wrapper Code</Message>
