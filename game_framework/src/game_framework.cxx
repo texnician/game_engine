@@ -4060,11 +4060,27 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
 
 
 
+  static Opt *new_Opt_Array(size_t nelements) { 
+    return (new Opt[nelements]);
+  }
+
+  static void delete_Opt_Array(Opt *ary) {
+    delete[] ary;
+  }
+
+  static Opt Opt_Array_getitem(Opt *ary, size_t index) {
+    return ary[index];
+  }
+  static void Opt_Array_setitem(Opt *ary, size_t index, Opt value) {
+    ary[index] = value;
+  }
+
+
 
 /* Opt */
-    size_t sizeof_ACC_INFO() { return sizeof(Opt); }
+    size_t sizeof_Opt() { return sizeof(Opt); }
 
-    PyObject* ACC_INFO_ArrayFromBuffer(Opt *outArrayBuf, int outArrayItemNumber,
+    PyObject* Opt_ArrayFromBuffer(Opt *outArrayBuf, int outArrayItemNumber,
                                   const char *inMemBuf, int inMemBufSize)
     {
         if (outArrayItemNumber * sizeof(Opt) >= inMemBufSize) {
@@ -4076,7 +4092,7 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
         }
      }
 
-     PyObject* ACC_INFO_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
+     PyObject* Opt_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
                                  Opt *inArrayBuf, int inArrayItemNumber)
      {
          size_t in_array_size = sizeof(Opt) * inArrayItemNumber;
@@ -4089,10 +4105,51 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
          }
       }
 
-/* unsigned char */
-    size_t sizeof_ACC_INFO() { return sizeof(unsigned char); }
 
-    PyObject* ACC_INFO_ArrayFromBuffer(unsigned char *outArrayBuf, int outArrayItemNumber,
+  static unsigned char *new_unsigned_char_Array(size_t nelements) { 
+    return (new unsigned char[nelements]);
+  }
+
+  static void delete_unsigned_char_Array(unsigned char *ary) {
+    delete[] ary;
+  }
+
+  static unsigned char unsigned_char_Array_getitem(unsigned char *ary, size_t index) {
+    return ary[index];
+  }
+  static void unsigned_char_Array_setitem(unsigned char *ary, size_t index, unsigned char value) {
+    ary[index] = value;
+  }
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_unsigned_SS_char  (unsigned char value)
+{    
+  return SWIG_From_unsigned_SS_long  (value);
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_char (PyObject * obj, unsigned char *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UCHAR_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned char >(v);
+    }
+  }  
+  return res;
+}
+
+
+
+/* unsigned char */
+    size_t sizeof_unsigned_char() { return sizeof(unsigned char); }
+
+    PyObject* unsigned_char_ArrayFromBuffer(unsigned char *outArrayBuf, int outArrayItemNumber,
                                   const char *inMemBuf, int inMemBufSize)
     {
         if (outArrayItemNumber * sizeof(unsigned char) >= inMemBufSize) {
@@ -4104,7 +4161,7 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
         }
      }
 
-     PyObject* ACC_INFO_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
+     PyObject* unsigned_char_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
                                  unsigned char *inArrayBuf, int inArrayItemNumber)
      {
          size_t in_array_size = sizeof(unsigned char) * inArrayItemNumber;
@@ -4117,10 +4174,28 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
          }
       }
 
-/* ROLE_INFO */
-    size_t sizeof_ACC_INFO() { return sizeof(ROLE_INFO); }
 
-    PyObject* ACC_INFO_ArrayFromBuffer(ROLE_INFO *outArrayBuf, int outArrayItemNumber,
+  static ROLE_INFO *new_ROLE_INFO_Array(size_t nelements) { 
+    return (new ROLE_INFO[nelements]);
+  }
+
+  static void delete_ROLE_INFO_Array(ROLE_INFO *ary) {
+    delete[] ary;
+  }
+
+  static ROLE_INFO ROLE_INFO_Array_getitem(ROLE_INFO *ary, size_t index) {
+    return ary[index];
+  }
+  static void ROLE_INFO_Array_setitem(ROLE_INFO *ary, size_t index, ROLE_INFO value) {
+    ary[index] = value;
+  }
+
+
+
+/* ROLE_INFO */
+    size_t sizeof_ROLE_INFO() { return sizeof(ROLE_INFO); }
+
+    PyObject* ROLE_INFO_ArrayFromBuffer(ROLE_INFO *outArrayBuf, int outArrayItemNumber,
                                   const char *inMemBuf, int inMemBufSize)
     {
         if (outArrayItemNumber * sizeof(ROLE_INFO) >= inMemBufSize) {
@@ -4132,7 +4207,7 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
         }
      }
 
-     PyObject* ACC_INFO_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
+     PyObject* ROLE_INFO_ArrayToBuffer(char *outMemBuf, int outMemBufSize,
                                  ROLE_INFO *inArrayBuf, int inArrayItemNumber)
      {
          size_t in_array_size = sizeof(ROLE_INFO) * inArrayItemNumber;
@@ -4144,6 +4219,24 @@ static SWIGCDATA cdata_void(void *ptr, size_t nelements)
              return Py_None;
          }
       }
+
+
+  static ACC_INFO *new_ACC_INFO_Array(size_t nelements) { 
+    return (new ACC_INFO[nelements]);
+  }
+
+  static void delete_ACC_INFO_Array(ACC_INFO *ary) {
+    delete[] ary;
+  }
+
+  static ACC_INFO ACC_INFO_Array_getitem(ACC_INFO *ary, size_t index) {
+    return ary[index];
+  }
+  static void ACC_INFO_Array_setitem(ACC_INFO *ary, size_t index, ACC_INFO value) {
+    ary[index] = value;
+  }
+
+
 
 /* ACC_INFO */
     size_t sizeof_ACC_INFO() { return sizeof(ACC_INFO); }
@@ -6116,12 +6209,132 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_sizeof_ACC_INFO(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_Opt_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  Opt *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Opt_Array" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = static_cast< size_t >(val1);
+  result = (Opt *)new_Opt_Array(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Opt, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_Opt_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  Opt *arg1 = (Opt *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Opt, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Opt_Array" "', argument " "1"" of type '" "Opt *""'"); 
+  }
+  arg1 = reinterpret_cast< Opt * >(argp1);
+  delete_Opt_Array(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Opt_Array_getitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  Opt *arg1 = (Opt *) 0 ;
+  size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  Opt result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"Opt_Array_getitem",2,2,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Opt, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Opt_Array_getitem" "', argument " "1"" of type '" "Opt *""'"); 
+  }
+  arg1 = reinterpret_cast< Opt * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Opt_Array_getitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = Opt_Array_getitem(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((new Opt(static_cast< const Opt& >(result))), SWIGTYPE_p_Opt, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Opt_Array_setitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  Opt *arg1 = (Opt *) 0 ;
+  size_t arg2 ;
+  Opt arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args,"Opt_Array_setitem",3,3,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Opt, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Opt_Array_setitem" "', argument " "1"" of type '" "Opt *""'"); 
+  }
+  arg1 = reinterpret_cast< Opt * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Opt_Array_setitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  {
+    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_Opt,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Opt_Array_setitem" "', argument " "3"" of type '" "Opt""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Opt_Array_setitem" "', argument " "3"" of type '" "Opt""'");
+    } else {
+      Opt * temp = reinterpret_cast< Opt * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  Opt_Array_setitem(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_sizeof_Opt(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   size_t result;
   
-  if (!SWIG_Python_UnpackTuple(args,"sizeof_ACC_INFO",0,0,0)) SWIG_fail;
-  result = sizeof_ACC_INFO();
+  if (!SWIG_Python_UnpackTuple(args,"sizeof_Opt",0,0,0)) SWIG_fail;
+  result = sizeof_Opt();
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -6129,7 +6342,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_0(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_Opt_ArrayFromBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   Opt *arg1 = (Opt *) 0 ;
   int arg2 ;
@@ -6144,32 +6357,33 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_0(PyObject *self, int 
   void const *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"Opt_ArrayFromBuffer",4,4,swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_Opt, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "1"" of type '" "Opt *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Opt_ArrayFromBuffer" "', argument " "1"" of type '" "Opt *""'"); 
   }
   arg1 = reinterpret_cast< Opt * >(argp1);
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Opt_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   {
     res3 = PyObject_AsReadBuffer(swig_obj[2], &buf3, &size3);
     if (res3<0) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Opt_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
     }
     arg3 = (char *) buf3;
   }
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Opt_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
+  result = (PyObject *)Opt_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6177,7 +6391,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_0(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_Opt_ArrayToBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
   int arg2 ;
@@ -6192,33 +6406,34 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_0(PyObject *self, int no
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"Opt_ArrayToBuffer",4,4,swig_obj)) SWIG_fail;
   {
     res1 = PyObject_AsWriteBuffer(swig_obj[0], &buf1, &size1);
     if (res1<0) {
       PyErr_Clear();
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Opt_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
     }
     arg1 = (char *) buf1;
   }
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Opt_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_Opt, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "3"" of type '" "Opt *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Opt_ArrayToBuffer" "', argument " "3"" of type '" "Opt *""'"); 
   }
   arg3 = reinterpret_cast< Opt * >(argp3);
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Opt_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayToBuffer(arg1,arg2,arg3,arg4);
+  result = (PyObject *)Opt_ArrayToBuffer(arg1,arg2,arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6226,7 +6441,132 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_1(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_unsigned_char_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  unsigned char *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_unsigned_char_Array" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = static_cast< size_t >(val1);
+  result = (unsigned char *)new_unsigned_char_Array(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_unsigned_char, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_unsigned_char_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned char *arg1 = (unsigned char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_unsigned_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_unsigned_char_Array" "', argument " "1"" of type '" "unsigned char *""'"); 
+  }
+  arg1 = reinterpret_cast< unsigned char * >(argp1);
+  delete_unsigned_char_Array(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_unsigned_char_Array_getitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned char *arg1 = (unsigned char *) 0 ;
+  size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  unsigned char result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"unsigned_char_Array_getitem",2,2,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_unsigned_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "unsigned_char_Array_getitem" "', argument " "1"" of type '" "unsigned char *""'"); 
+  }
+  arg1 = reinterpret_cast< unsigned char * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "unsigned_char_Array_getitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = (unsigned char)unsigned_char_Array_getitem(arg1,arg2);
+  resultobj = SWIG_From_unsigned_SS_char(static_cast< unsigned char >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_unsigned_char_Array_setitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned char *arg1 = (unsigned char *) 0 ;
+  size_t arg2 ;
+  unsigned char arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  unsigned char val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args,"unsigned_char_Array_setitem",3,3,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_unsigned_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "unsigned_char_Array_setitem" "', argument " "1"" of type '" "unsigned char *""'"); 
+  }
+  arg1 = reinterpret_cast< unsigned char * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "unsigned_char_Array_setitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_char(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "unsigned_char_Array_setitem" "', argument " "3"" of type '" "unsigned char""'");
+  } 
+  arg3 = static_cast< unsigned char >(val3);
+  unsigned_char_Array_setitem(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_sizeof_unsigned_char(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"sizeof_unsigned_char",0,0,0)) SWIG_fail;
+  result = sizeof_unsigned_char();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_unsigned_char_ArrayFromBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   unsigned char *arg1 = (unsigned char *) 0 ;
   int arg2 ;
@@ -6241,32 +6581,33 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_1(PyObject *self, int 
   void const *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"unsigned_char_ArrayFromBuffer",4,4,swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "1"" of type '" "unsigned char *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "unsigned_char_ArrayFromBuffer" "', argument " "1"" of type '" "unsigned char *""'"); 
   }
   arg1 = reinterpret_cast< unsigned char * >(argp1);
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "unsigned_char_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   {
     res3 = PyObject_AsReadBuffer(swig_obj[2], &buf3, &size3);
     if (res3<0) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "unsigned_char_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
     }
     arg3 = (char *) buf3;
   }
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "unsigned_char_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
+  result = (PyObject *)unsigned_char_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6274,7 +6615,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_1(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_unsigned_char_ArrayToBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
   int arg2 ;
@@ -6289,33 +6630,34 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_1(PyObject *self, int no
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"unsigned_char_ArrayToBuffer",4,4,swig_obj)) SWIG_fail;
   {
     res1 = PyObject_AsWriteBuffer(swig_obj[0], &buf1, &size1);
     if (res1<0) {
       PyErr_Clear();
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "unsigned_char_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
     }
     arg1 = (char *) buf1;
   }
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "unsigned_char_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "3"" of type '" "unsigned char *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "unsigned_char_ArrayToBuffer" "', argument " "3"" of type '" "unsigned char *""'"); 
   }
   arg3 = reinterpret_cast< unsigned char * >(argp3);
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "unsigned_char_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayToBuffer(arg1,arg2,arg3,arg4);
+  result = (PyObject *)unsigned_char_ArrayToBuffer(arg1,arg2,arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6323,7 +6665,140 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_2(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_ROLE_INFO_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  ROLE_INFO *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_ROLE_INFO_Array" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = static_cast< size_t >(val1);
+  result = (ROLE_INFO *)new_ROLE_INFO_Array(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ROLE_INFO, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ROLE_INFO_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ROLE_INFO *arg1 = (ROLE_INFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ROLE_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ROLE_INFO_Array" "', argument " "1"" of type '" "ROLE_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ROLE_INFO * >(argp1);
+  delete_ROLE_INFO_Array(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ROLE_INFO_Array_getitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ROLE_INFO *arg1 = (ROLE_INFO *) 0 ;
+  size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  ROLE_INFO result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"ROLE_INFO_Array_getitem",2,2,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ROLE_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ROLE_INFO_Array_getitem" "', argument " "1"" of type '" "ROLE_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ROLE_INFO * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ROLE_INFO_Array_getitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = ROLE_INFO_Array_getitem(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((new ROLE_INFO(static_cast< const ROLE_INFO& >(result))), SWIGTYPE_p_ROLE_INFO, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ROLE_INFO_Array_setitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ROLE_INFO *arg1 = (ROLE_INFO *) 0 ;
+  size_t arg2 ;
+  ROLE_INFO arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args,"ROLE_INFO_Array_setitem",3,3,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ROLE_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ROLE_INFO_Array_setitem" "', argument " "1"" of type '" "ROLE_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ROLE_INFO * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ROLE_INFO_Array_setitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  {
+    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_ROLE_INFO,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ROLE_INFO_Array_setitem" "', argument " "3"" of type '" "ROLE_INFO""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ROLE_INFO_Array_setitem" "', argument " "3"" of type '" "ROLE_INFO""'");
+    } else {
+      ROLE_INFO * temp = reinterpret_cast< ROLE_INFO * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  ROLE_INFO_Array_setitem(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_sizeof_ROLE_INFO(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"sizeof_ROLE_INFO",0,0,0)) SWIG_fail;
+  result = sizeof_ROLE_INFO();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ROLE_INFO_ArrayFromBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ROLE_INFO *arg1 = (ROLE_INFO *) 0 ;
   int arg2 ;
@@ -6338,32 +6813,33 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_2(PyObject *self, int 
   void const *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"ROLE_INFO_ArrayFromBuffer",4,4,swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ROLE_INFO, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "1"" of type '" "ROLE_INFO *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ROLE_INFO_ArrayFromBuffer" "', argument " "1"" of type '" "ROLE_INFO *""'"); 
   }
   arg1 = reinterpret_cast< ROLE_INFO * >(argp1);
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ROLE_INFO_ArrayFromBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   {
     res3 = PyObject_AsReadBuffer(swig_obj[2], &buf3, &size3);
     if (res3<0) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ROLE_INFO_ArrayFromBuffer" "', argument " "3"" of type '" "(const char *inMemBuf, SIZE)""'");
     }
     arg3 = (char *) buf3;
   }
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ROLE_INFO_ArrayFromBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
+  result = (PyObject *)ROLE_INFO_ArrayFromBuffer(arg1,arg2,(char const *)arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6371,7 +6847,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_2(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_ROLE_INFO_ArrayToBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
   int arg2 ;
@@ -6386,33 +6862,34 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_2(PyObject *self, int no
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"ROLE_INFO_ArrayToBuffer",4,4,swig_obj)) SWIG_fail;
   {
     res1 = PyObject_AsWriteBuffer(swig_obj[0], &buf1, &size1);
     if (res1<0) {
       PyErr_Clear();
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ROLE_INFO_ArrayToBuffer" "', argument " "1"" of type '" "(char *outMemBuf, SIZE)""'");
     }
     arg1 = (char *) buf1;
   }
   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ROLE_INFO_ArrayToBuffer" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
   res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_ROLE_INFO, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "3"" of type '" "ROLE_INFO *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ROLE_INFO_ArrayToBuffer" "', argument " "3"" of type '" "ROLE_INFO *""'"); 
   }
   arg3 = reinterpret_cast< ROLE_INFO * >(argp3);
   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ACC_INFO_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ROLE_INFO_ArrayToBuffer" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  result = (PyObject *)ACC_INFO_ArrayToBuffer(arg1,arg2,arg3,arg4);
+  result = (PyObject *)ROLE_INFO_ArrayToBuffer(arg1,arg2,arg3,arg4);
   resultobj = result;
   return resultobj;
 fail:
@@ -6420,7 +6897,140 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_3(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_ACC_INFO_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  ACC_INFO *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_ACC_INFO_Array" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = static_cast< size_t >(val1);
+  result = (ACC_INFO *)new_ACC_INFO_Array(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ACC_INFO, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ACC_INFO_Array(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ACC_INFO *arg1 = (ACC_INFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ACC_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ACC_INFO_Array" "', argument " "1"" of type '" "ACC_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ACC_INFO * >(argp1);
+  delete_ACC_INFO_Array(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ACC_INFO_Array_getitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ACC_INFO *arg1 = (ACC_INFO *) 0 ;
+  size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  ACC_INFO result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"ACC_INFO_Array_getitem",2,2,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ACC_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_Array_getitem" "', argument " "1"" of type '" "ACC_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ACC_INFO * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_Array_getitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = ACC_INFO_Array_getitem(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((new ACC_INFO(static_cast< const ACC_INFO& >(result))), SWIGTYPE_p_ACC_INFO, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ACC_INFO_Array_setitem(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  ACC_INFO *arg1 = (ACC_INFO *) 0 ;
+  size_t arg2 ;
+  ACC_INFO arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args,"ACC_INFO_Array_setitem",3,3,swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ACC_INFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_Array_setitem" "', argument " "1"" of type '" "ACC_INFO *""'"); 
+  }
+  arg1 = reinterpret_cast< ACC_INFO * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ACC_INFO_Array_setitem" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  {
+    res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_ACC_INFO,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ACC_INFO_Array_setitem" "', argument " "3"" of type '" "ACC_INFO""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ACC_INFO_Array_setitem" "', argument " "3"" of type '" "ACC_INFO""'");
+    } else {
+      ACC_INFO * temp = reinterpret_cast< ACC_INFO * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  ACC_INFO_Array_setitem(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_sizeof_ACC_INFO(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args,"sizeof_ACC_INFO",0,0,0)) SWIG_fail;
+  result = sizeof_ACC_INFO();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   ACC_INFO *arg1 = (ACC_INFO *) 0 ;
   int arg2 ;
@@ -6435,9 +7045,10 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer__SWIG_3(PyObject *self, int 
   void const *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"ACC_INFO_ArrayFromBuffer",4,4,swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ACC_INFO, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ACC_INFO_ArrayFromBuffer" "', argument " "1"" of type '" "ACC_INFO *""'"); 
@@ -6468,64 +7079,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayFromBuffer(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[5];
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args,"ACC_INFO_ArrayFromBuffer",0,4,argv))) SWIG_fail;
-  --argc;
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Opt, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_1;
-    return _wrap_ACC_INFO_ArrayFromBuffer__SWIG_0(self, argc, argv);
-  }
-check_1:
-  
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_unsigned_char, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_2;
-    return _wrap_ACC_INFO_ArrayFromBuffer__SWIG_1(self, argc, argv);
-  }
-check_2:
-  
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ROLE_INFO, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_3;
-    return _wrap_ACC_INFO_ArrayFromBuffer__SWIG_2(self, argc, argv);
-  }
-check_3:
-  
-  if (argc == 4) {
-    return _wrap_ACC_INFO_ArrayFromBuffer__SWIG_3(self, argc, argv);
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ACC_INFO_ArrayFromBuffer'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ACC_INFO_ArrayFromBuffer(Opt *,int,char const *,int)\n"
-    "    ACC_INFO_ArrayFromBuffer(unsigned char *,int,char const *,int)\n"
-    "    ACC_INFO_ArrayFromBuffer(ROLE_INFO *,int,char const *,int)\n"
-    "    ACC_INFO_ArrayFromBuffer(ACC_INFO *,int,char const *,int)\n");
-  return 0;
-}
-
-
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_3(PyObject *self, int nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
   int arg2 ;
@@ -6540,9 +7094,10 @@ SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer__SWIG_3(PyObject *self, int no
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
   PyObject *result = 0 ;
   
-  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args,"ACC_INFO_ArrayToBuffer",4,4,swig_obj)) SWIG_fail;
   {
     res1 = PyObject_AsWriteBuffer(swig_obj[0], &buf1, &size1);
     if (res1<0) {
@@ -6574,63 +7129,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ACC_INFO_ArrayToBuffer(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[5];
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args,"ACC_INFO_ArrayToBuffer",0,4,argv))) SWIG_fail;
-  --argc;
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_Opt, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_1;
-    return _wrap_ACC_INFO_ArrayToBuffer__SWIG_0(self, argc, argv);
-  }
-check_1:
-  
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_char, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_2;
-    return _wrap_ACC_INFO_ArrayToBuffer__SWIG_1(self, argc, argv);
-  }
-check_2:
-  
-  if (argc == 4) {
-    int _v = 0;
-    {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_ROLE_INFO, 0);
-      _v = SWIG_CheckState(res);
-    }
-    if (!_v) goto check_3;
-    return _wrap_ACC_INFO_ArrayToBuffer__SWIG_2(self, argc, argv);
-  }
-check_3:
-  
-  if (argc == 4) {
-    return _wrap_ACC_INFO_ArrayToBuffer__SWIG_3(self, argc, argv);
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'ACC_INFO_ArrayToBuffer'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ACC_INFO_ArrayToBuffer(char *,int,Opt *,int)\n"
-    "    ACC_INFO_ArrayToBuffer(char *,int,unsigned char *,int)\n"
-    "    ACC_INFO_ArrayToBuffer(char *,int,ROLE_INFO *,int)\n"
-    "    ACC_INFO_ArrayToBuffer(char *,int,ACC_INFO *,int)\n");
-  return 0;
-}
-
-
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"GetUniqObjectId", (PyCFunction)_wrap_GetUniqObjectId, METH_NOARGS, NULL},
@@ -6639,6 +7137,31 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ProtocolDecode", _wrap_ProtocolDecode, METH_VARARGS, NULL},
 	 { (char *)"cdata", _wrap_cdata, METH_VARARGS, NULL},
 	 { (char *)"memmove", _wrap_memmove, METH_VARARGS, NULL},
+	 { (char *)"new_Opt_Array", (PyCFunction)_wrap_new_Opt_Array, METH_O, NULL},
+	 { (char *)"delete_Opt_Array", (PyCFunction)_wrap_delete_Opt_Array, METH_O, NULL},
+	 { (char *)"Opt_Array_getitem", _wrap_Opt_Array_getitem, METH_VARARGS, NULL},
+	 { (char *)"Opt_Array_setitem", _wrap_Opt_Array_setitem, METH_VARARGS, NULL},
+	 { (char *)"sizeof_Opt", (PyCFunction)_wrap_sizeof_Opt, METH_NOARGS, NULL},
+	 { (char *)"Opt_ArrayFromBuffer", _wrap_Opt_ArrayFromBuffer, METH_VARARGS, NULL},
+	 { (char *)"Opt_ArrayToBuffer", _wrap_Opt_ArrayToBuffer, METH_VARARGS, NULL},
+	 { (char *)"new_unsigned_char_Array", (PyCFunction)_wrap_new_unsigned_char_Array, METH_O, NULL},
+	 { (char *)"delete_unsigned_char_Array", (PyCFunction)_wrap_delete_unsigned_char_Array, METH_O, NULL},
+	 { (char *)"unsigned_char_Array_getitem", _wrap_unsigned_char_Array_getitem, METH_VARARGS, NULL},
+	 { (char *)"unsigned_char_Array_setitem", _wrap_unsigned_char_Array_setitem, METH_VARARGS, NULL},
+	 { (char *)"sizeof_unsigned_char", (PyCFunction)_wrap_sizeof_unsigned_char, METH_NOARGS, NULL},
+	 { (char *)"unsigned_char_ArrayFromBuffer", _wrap_unsigned_char_ArrayFromBuffer, METH_VARARGS, NULL},
+	 { (char *)"unsigned_char_ArrayToBuffer", _wrap_unsigned_char_ArrayToBuffer, METH_VARARGS, NULL},
+	 { (char *)"new_ROLE_INFO_Array", (PyCFunction)_wrap_new_ROLE_INFO_Array, METH_O, NULL},
+	 { (char *)"delete_ROLE_INFO_Array", (PyCFunction)_wrap_delete_ROLE_INFO_Array, METH_O, NULL},
+	 { (char *)"ROLE_INFO_Array_getitem", _wrap_ROLE_INFO_Array_getitem, METH_VARARGS, NULL},
+	 { (char *)"ROLE_INFO_Array_setitem", _wrap_ROLE_INFO_Array_setitem, METH_VARARGS, NULL},
+	 { (char *)"sizeof_ROLE_INFO", (PyCFunction)_wrap_sizeof_ROLE_INFO, METH_NOARGS, NULL},
+	 { (char *)"ROLE_INFO_ArrayFromBuffer", _wrap_ROLE_INFO_ArrayFromBuffer, METH_VARARGS, NULL},
+	 { (char *)"ROLE_INFO_ArrayToBuffer", _wrap_ROLE_INFO_ArrayToBuffer, METH_VARARGS, NULL},
+	 { (char *)"new_ACC_INFO_Array", (PyCFunction)_wrap_new_ACC_INFO_Array, METH_O, NULL},
+	 { (char *)"delete_ACC_INFO_Array", (PyCFunction)_wrap_delete_ACC_INFO_Array, METH_O, NULL},
+	 { (char *)"ACC_INFO_Array_getitem", _wrap_ACC_INFO_Array_getitem, METH_VARARGS, NULL},
+	 { (char *)"ACC_INFO_Array_setitem", _wrap_ACC_INFO_Array_setitem, METH_VARARGS, NULL},
 	 { (char *)"sizeof_ACC_INFO", (PyCFunction)_wrap_sizeof_ACC_INFO, METH_NOARGS, NULL},
 	 { (char *)"ACC_INFO_ArrayFromBuffer", _wrap_ACC_INFO_ArrayFromBuffer, METH_VARARGS, NULL},
 	 { (char *)"ACC_INFO_ArrayToBuffer", _wrap_ACC_INFO_ArrayToBuffer, METH_VARARGS, NULL},

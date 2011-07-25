@@ -71,14 +71,12 @@ def OutPut(type_table, out_file):
 '''.format(__file__))
         print('%pybuffer_mutable_string(char *outMemBuf);')
         print('%pybuffer_string(const char *inMemBuf);')
-
+        
         for item in type_table:
-            print('/* {0} */'.format(item))
             joined_name = '_'.join(item.split(' '))
-            print('%array_funtions({0}, {1})'.format(item, joined_name + '_Array'))
-
-        print('%inline %{')
-        for item in type_table:
+            print('%array_functions({0}, {1})'.format(item, joined_name + '_Array'))
+            print('')
+            print('%inline %{')
             print('')
             print('/* {0} */'.format(item))
             print('    size_t sizeof_{0}() {{ return sizeof({1}); }}'.format(joined_name, item))
@@ -107,9 +105,9 @@ def OutPut(type_table, out_file):
             print('             return Py_None;')
             print('         }')
             print('      }')
-        print('%}')
-        print('')
-            
+            print('%}')
+            print('')
+
         print('''/* {0} Ends here. */'''.format(out_file.name))
 
 def SwigParseTypemap(src_file):
