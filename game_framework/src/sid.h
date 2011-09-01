@@ -20,7 +20,11 @@ public:
         {
             return str_;
         }
-
+    inline sid_t operator ()
+        {
+            return id_;
+        }
+    
 private:
     static sid_t hash_name(const char* const str);
     static const char* const WILDCARD_STR;

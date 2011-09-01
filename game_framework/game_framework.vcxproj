@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\acceptor.cpp" />
+    <ClCompile Include="src\build_object.cpp" />
     <ClCompile Include="src\echo_handler.cpp" />
     <ClCompile Include="src\game_framework.cxx" />
     <ClCompile Include="src\io_multiplex_svc.cpp" />
@@ -144,9 +145,12 @@
     <ClInclude Include="src\acceptor.h" />
     <ClInclude Include="src\assert.h" />
     <ClInclude Include="src\atomic_pod.h" />
+    <ClInclude Include="src\character_component.h" />
+    <ClInclude Include="src\component.h" />
     <ClInclude Include="src\connector.h" />
     <ClInclude Include="src\define.h" />
     <ClInclude Include="src\echo_handler.h" />
+    <ClInclude Include="src\game_object.h" />
     <ClInclude Include="src\io_multiplex_svc.h" />
     <ClInclude Include="src\io_pool.h" />
     <ClInclude Include="src\log.h" />
